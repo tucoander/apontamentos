@@ -1,0 +1,127 @@
+<form class="needs-validation" novalidate id="apontamento">
+<div class="row">
+
+    <div class="col-md-4 mb-3">
+        <label for="country">Data</label>
+        <div class="input-group">
+        <input type="date" class="form-control" id="adddte" required>
+        <div class="invalid-feedback" style="width: 100%;">
+            Data Obrigatória.
+        </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-3">
+        <label for="country">Hora Início</label>
+        <div class="input-group">
+        <input type="time" class="form-control" id="fr_tim" required>
+        <div class="invalid-feedback" style="width: 100%;">
+            Horário Obrigatório.
+        </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-3">
+        <label for="country">Hora Fim</label>
+        <div class="input-group">
+        <input type="time" class="form-control" id="to_tim" required>
+        <div class="invalid-feedback" style="width: 100%;">
+            Horário Obrigatório.
+        </div>
+        </div>
+    </div>
+
+    <div class="col-md-5 mb-3">
+    <label for="country">Produto</label>
+        <select class="custom-select d-block w-100" id="opr_id" required>
+        <option value="">Selecione...</option>
+        <?php
+            $db = new SQLite3('apontamentos.db');
+
+            $s_tblprd = "
+                    SELECT prd_id, prdnme FROM usrprd GROUP BY prd_id, prdnme
+                ";
+                $resultado = $db->query($s_tblprd);
+                while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
+                    print '
+                    <option value="'.$row["prd_id"].'">'.$row["prdnme"].'</option>
+                    ';
+                }
+        ?>
+        </select>
+    <div class="invalid-feedback">
+        Campo Produto é Obrigatório.
+    </div>
+    </div>
+    
+    
+    <div class="col-md-4 mb-3">
+    <label for="zip">Operações</label>
+    <select class="custom-select d-block w-100" id="opr_id" required>
+    <option value="">Selecione...</option>
+    <?php
+        $db = new SQLite3('apontamentos.db');
+
+        $s_tblprd = "
+                SELECT opr_id, oprnme FROM usropr GROUP BY opr_id, oprnme
+            ";
+            $resultado = $db->query($s_tblprd);
+            while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
+                print '
+                <option value="'.$row["opr_id"].'">'.$row["oprnme"].'</option>
+                ';
+            }
+    ?>
+    </select>
+    <div class="invalid-feedback">
+        Campo Operação é Obrigatório.
+    </div>
+    </div>
+    
+    
+    <div class="col-md-3 mb-3">
+    <label for="zip">País</label>
+
+    <select class="custom-select d-block w-100" id="cty_id" required>
+    <option value="">Selecione...</option>
+    <?php
+        $db = new SQLite3('apontamentos.db');
+
+        $s_tblprd = "
+                SELECT cty_id, ctynme FROM usrcty GROUP BY cty_id, ctynme
+            ";
+            $resultado = $db->query($s_tblprd);
+            while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
+                print '
+                <option value="'.$row["cty_id"].'">'.$row["ctynme"].'</option>
+                ';
+            }
+    ?>
+    
+    </select>
+    <div class="invalid-feedback">
+        Campo País é Obrigatório.
+    </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="username">Solicitante</label>
+    <div class="input-group">
+    <input type="text" class="form-control" id="usrask" placeholder="Nome" required>
+    <div class="invalid-feedback" style="width: 100%;">
+        Nome do Solicitante é Obrigatório.
+    </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="address">Observação</label>
+    <textarea  rows="3" class="form-control" id="usrobs" placeholder="Obs."></textarea>
+    <input type="text" class="form-control" id="usr_id" placeholder="" value="<?php print $logado;?>" hidden>
+</div>
+
+<hr class="mb-5">
+<button class="btn btn-primary btn-lg btn-block" id="salvar" type="submit">Salvar Registro</button>
+<div class="h3 mb-3 font-weight-normal" id="res">Teste</div>
+</form>
