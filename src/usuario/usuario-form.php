@@ -14,7 +14,11 @@
                     <input type="text" class="form-control" id="usr_id" placeholder="Digite o usuário">
                 </div>
                 <div class="form-group">
-                    <label for="usrpsw">Sigla</label>
+                    <label for="usrnme">Nome</label>
+                    <input type="text" class="form-control" id="usrnme" placeholder="Digite o usuário">
+                </div>
+                <div class="form-group">
+                    <label for="usrpsw">Senha</label>
                     <input type="password" class="form-control" id="usrpsw" placeholder="Digite a senha">
                 </div>
                 <button type="submit" class="btn btn-primary verde" id="salvar">Salvar</button>

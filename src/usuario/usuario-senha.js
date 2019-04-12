@@ -11,17 +11,17 @@ jQuery(document).ready(function(){
         jQuery("#res").empty();
            
         // pegando os campos do formulário
-        var usr_id = jQuery("#usr_id").val();
-        var usrpsw = jQuery("#usrpsw").val();
-        var usrnme = jQuery("#usrnme").val();
+        var old_usrpsw = jQuery("#old_usrpsw").val();
+        var new_usrpsw = jQuery("#new_usrpsw").val();
+       
         
         // tipo dos dados, url do documento, tipo de dados, campos enviados    
         // para GET mude o type para GET  
         jQuery.ajax({
             type: "POST",
-            url: "usuario-exe.php",
+            url: "usuario-senha-exe.php",
             dataType: "html",
-            data: {usr_id: usr_id, usrpsw: usrpsw, usrnme: usrnme},
+            data: {old_usrpsw: old_usrpsw, new_usrpsw: new_usrpsw},
         // enviado com sucesso
             success: function(response){
                 jQuery("#res").append(response);
