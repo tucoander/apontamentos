@@ -1,11 +1,14 @@
 <?php
+
+include(  $_SERVER['DOCUMENT_ROOT']."/001_apontar/src/rotas/rotas.php");
+
 session_start();
 if ($_SESSION["usrlog"]) {
     if (isset($_SESSION["usr_id"]) || !empty($_SESSION["usr_id"])) {
         $usr_id =  base64_decode($_SESSION["usr_id"]);
         $usr_psw =  base64_decode($_SESSION["usrpsw"]);
 
-        $db = new SQLite3('../sqlite/apontamentos.db');
+        $db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/001_apontar/src/sqlite/apontamentos.db');
 
         $s_tblaut = "
             SELECT ua.usr_id, ua.usrrol  
@@ -58,14 +61,14 @@ if ($_SESSION["usrlog"]) {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active" >
-                    <a class="nav-link" href="./apontamento-form.php">Home <span class="sr-only" >(Página atual)</span></a>
+                    <a class="nav-link" href="<?php print 'http://'.$site['Home'];?>">Home <span class="sr-only" ></span></a>
                 </li>
 
                 <li class="nav-item" >
-                    <a class="nav-link" href="./apontamento-form.php" >Inserir</a>
+                    <a class="nav-link" href="<?php print 'http://'.$site['Inserir'];?>" >Inserir</a>
                 </li>
                 <li class="nav-item" >
-                    <a class="nav-link" href="./apontamento-view.php" >Visualizar</a>
+                    <a class="nav-link" href="<?php print 'http://'.$site['Visualizar'];?>" >Visualizar</a>
                 </li>
                 <?php 
                 if($auth){
@@ -75,8 +78,8 @@ if ($_SESSION["usrlog"]) {
 						  Dashboard
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						  <a class="dropdown-item" href="./apontamento-dashboard.php">Operações</a>
-						  <a class="dropdown-item" href="./apontamento-produtos.php">Produtos</a>
+						  <a class="dropdown-item" href="http://'.$site['Operações'].'">Operações</a>
+						  <a class="dropdown-item" href="http://'.$site['Produtos'].'">Produtos</a>
 						  <a class="dropdown-item" href="#">Working here</a>
 						</div>
 					</li>
@@ -89,9 +92,10 @@ if ($_SESSION["usrlog"]) {
                         Usuário
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarusuario">
-                        <a class="dropdown-item" href="../usuario/usuario-senha.php">Alterar Senha</a>
+                        <a class="dropdown-item" href="<?php print 'http://'.$site['Alterar_senha'];?>">Alterar Senha</a>
                     </div>
                 </li>
+                
                 <!--
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Desativado</a>
@@ -103,3 +107,4 @@ if ($_SESSION["usrlog"]) {
             <span class="badge badge-secondary"> <?php print $_SESSION["usr_id"]; ?></span>
         </a>
     </nav> 
+  
