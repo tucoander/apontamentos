@@ -49,6 +49,12 @@
                 $resultado = $cmd_db->execute();
 
                 print '
+                <script language= "JavaScript">
+                    var delay=250;
+                    setTimeout(function(){
+                        window.location.replace("../apontamento/apontamento-form.php");
+                    },delay);
+                </script>
                 <br>
                 <div class="alert alert-success" role="alert">
                     Senha alterada com sucesso.
