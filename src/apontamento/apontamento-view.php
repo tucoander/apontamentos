@@ -1,6 +1,7 @@
 <?php
     include('../template/template-barra.php');
     $db = new SQLite3('../sqlite/apontamentos.db');
+    $s_tbllog = "";
 ?>
 
 <div class="alert alert-success" role="alert" id="res">
@@ -11,7 +12,52 @@
     <div class="card" style="margin: 1em; padding: 1em; margin-top:3em;">
         <div class="card-body">
         <?php
-        $s_tbllog = "
+       if(isset($_POST['filtro'])){
+            
+            if(isset($_POST['adddte'])){
+                $s_tbllog = "
+                SELECT * 
+                    FROM usrlog ul
+                        inner join  usrprd up 
+                        on (ul.prd_id = up.prd_id)
+                        inner join usrcty uc
+                        on (ul.cty_id = uc.cty_id)
+                        inner join usropr uo
+                        on (ul.opr_id = uo.opr_id)
+                    WHERE ul.usr_id = :usr_id
+                        AND ul.logdte = :logdte
+                    order by ul.logdte asc
+                ";
+                $_adddte = $_POST['adddte'];
+                $_usr_id = $_SESSION['usr_id'];
+        
+                $cmd_db = $db->prepare($s_tbllog);
+                $cmd_db->bindValue('usr_id', $_usr_id);
+                $cmd_db->bindValue('logdte', $_adddte);
+            }
+       }
+       else if(isset($_POST['todos'])){
+            
+            $s_tbllog = "
+                SELECT * 
+                    FROM usrlog ul
+                        inner join  usrprd up 
+                        on (ul.prd_id = up.prd_id)
+                        inner join usrcty uc
+                        on (ul.cty_id = uc.cty_id)
+                        inner join usropr uo
+                        on (ul.opr_id = uo.opr_id)
+                    WHERE ul.usr_id = :usr_id
+                    order by ul.logdte asc
+            ";
+            $_usr_id = $_SESSION['usr_id'];
+            $cmd_db = $db->prepare($s_tbllog);
+            $cmd_db->bindValue('usr_id', $_usr_id);
+       }
+       else{
+            
+            
+            $s_tbllog = "
             SELECT * 
                 FROM usrlog ul
                     inner join  usrprd up 
@@ -20,12 +66,38 @@
                     on (ul.cty_id = uc.cty_id)
                     inner join usropr uo
                     on (ul.opr_id = uo.opr_id)
-                WHERE ul.usr_id = '".$_SESSION['usr_id']."'
+                WHERE ul.usr_id = :usr_id
+                    AND ul.logdte = :logdte
                 order by ul.logdte asc
-        ";
+            ";
+            $_adddte = date("Y-m-d");
+            $_usr_id = $_SESSION['usr_id'];
+
+            $cmd_db = $db->prepare($s_tbllog);
+            $cmd_db->bindValue('usr_id', $_usr_id);
+            $cmd_db->bindValue('logdte', $_adddte);
+       }
+
+        
         ?>
         
-        
+        <form method="POST" action="apontamento-view.php">
+			  <div class="row">
+				<div class="col">
+				  <input type="text" class="form-control-plaintext" value="Data:">
+				</div>
+				<div class="col">
+				  <input type="date" class="form-control" placeholder="Data" id="adddte" name="adddte">
+				</div>
+				<div class="col">
+				  <input type="submit" class="btn btn-primary col-12" name="filtro" value="Filtrar">
+				</div>
+				<div class="col">
+				  <input type="submit" class="btn btn-primary col-12" name="todos" value="Limpar Filtro" >
+				</div>
+			  </div>
+		</form>
+        <br>
         <table class="table" id="apontamento">
         <thead>
             <tr>
@@ -45,7 +117,7 @@
        
         <?php
         $contador = 0;
-        $resultado = $db->query($s_tbllog);
+        $resultado = $cmd_db->execute();
             while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
                 print '
                     <tr>
