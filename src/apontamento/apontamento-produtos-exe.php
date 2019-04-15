@@ -63,7 +63,15 @@
                     labels: ['".$labels."'],
                     datasets: [{
                         label: 'Produtos',
-                        backgroundColor: ['rgb(255, 255, 0)','rgb(0, 255, 255)','rgb(0, 255, 0)'],
+                        backgroundColor: [
+                            'rgb(0, 98, 73)',
+                            'rgb(120, 190, 32)',
+                            'rgb(0, 168, 176)',
+                            'rgb(0, 142, 207)',
+                            'rgb(0, 86, 145)',
+                            'rgb(80, 36, 127)',
+                            'rgb(185, 2, 118)'
+                        ],
                         borderColor: 'rgb(255, 255, 255)',
                         data: ['".$data."']
                     }]
