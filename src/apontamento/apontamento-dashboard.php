@@ -15,6 +15,7 @@
 
             $s_tbllog = "
                 SELECT 
+                uo.opr_id,
                 uo.oprnme,
                 sum((julianday(to_logtim) - julianday(fr_logtim))*24) as diff_jd
                 FROM usrlog ul
@@ -26,6 +27,7 @@
                     on (ul.opr_id = uo.opr_id)
                 where ul.logdte between :fr_adddte and :to_adddte
                 group by
+                uo.opr_id,
                     uo.oprnme
                 order by 
                     ul.logdte asc
@@ -61,6 +63,7 @@
     else if(isset($_POST['todos'])){
         $s_tbllog = "
         SELECT 
+        uo.opr_id,
         uo.oprnme,
         sum((julianday(to_logtim) - julianday(fr_logtim))*24) as diff_jd
         FROM usrlog ul
@@ -71,6 +74,7 @@
             inner join usropr uo
             on (ul.opr_id = uo.opr_id)
         group by
+        uo.opr_id,
             uo.oprnme
         order by 
             ul.logdte asc
@@ -91,6 +95,7 @@
     else{
         $s_tbllog = "
         SELECT 
+        uo.opr_id,
         uo.oprnme,
         sum((julianday(to_logtim) - julianday(fr_logtim))*24) as diff_jd
         FROM usrlog ul
@@ -101,6 +106,7 @@
             inner join usropr uo
             on (ul.opr_id = uo.opr_id)
         group by
+            uo.opr_id,
             uo.oprnme
         order by 
             ul.logdte asc
@@ -186,7 +192,15 @@
         labels: ['<?php print $labels_script;?> '],
         datasets: [{
             label: 'Operações',
-            backgroundColor: ['rgb(255, 255, 0)','rgb(0, 255, 255)','rgb(0, 255, 0)'],
+            backgroundColor: [
+                'rgb(0, 98, 73)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 168, 176)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 86, 145)',
+                'rgb(80, 36, 127)',
+                'rgb(185, 2, 118)'
+            ],
             borderColor: 'rgb(255, 255, 255)',
             data: [' <?php print $data_script;?> ']
         }]
