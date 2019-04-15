@@ -1,6 +1,20 @@
 <?php
 
-include(  $_SERVER['DOCUMENT_ROOT']."/001_apontar/src/rotas/rotas.php");
+$projeto = preg_split('/(\/)/', $_SERVER['PHP_SELF']) ;
+ 
+    
+    /* Rotas */
+    $site =  array (
+        "Index"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/",
+        "Home"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/template/home.php",
+        "Inserir" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-form.php",
+        "Visualizar" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-view.php",
+        "Operações" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-dashboard.php",
+        "Produtos" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-produtos.php",
+        "Alterar_senha" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/usuario/usuario-senha.php",
+        "Database"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/sqlite/apontamentos.db"
+    );
+
 
 session_start();
 if ($_SESSION["usrlog"]) {
@@ -8,7 +22,7 @@ if ($_SESSION["usrlog"]) {
         $usr_id =  base64_decode($_SESSION["usr_id"]);
         $usr_psw =  base64_decode($_SESSION["usrpsw"]);
 
-        $db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/001_apontar/src/sqlite/apontamentos.db');
+        $db = new SQLite3('../sqlite/apontamentos.db');
 
         $s_tblaut = "
             SELECT ua.usr_id, ua.usrrol  
