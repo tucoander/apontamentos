@@ -1,0 +1,10 @@
+RewriteEngine On 
+<Files magic>
+	ForceType application/x-httpd-php5
+</Files>
+Options All -Indexes
+
+# Custom Erros
+ErrorDocument 403 /001_apontar/src/erros/403.html
+ErrorDocument 404 /001_apontar/src/erros/404.html
+ErrorDocument 500 /001_apontar/src/erros/403.html
