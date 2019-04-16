@@ -6198,6 +6198,7 @@ button.bg-light:focus {
 
 .bg-bosch {
   background: url('../../img/bosch-faixa.png') !important;
+  background-size: 100%;
   width: 101%; 
   margin-left: -10px; 
   margin-right: -5px;
