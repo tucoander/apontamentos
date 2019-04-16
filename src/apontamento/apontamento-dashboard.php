@@ -128,9 +128,9 @@
 	
 ?>
 
-<main role="main" class="container">
-    <div class="card" style="margin: 0.5em; padding: 0.5em; margin-top:2em;">
-        <div class="card-body">
+<main role="main" class="container-fluid">
+    <div class="card" >
+        <div class="card-body" style="height: 35em;">
             <form method="POST" action="apontamento-dashboard.php">
                 <div class="row">
                     <div class="col">
@@ -162,19 +162,14 @@
             </div>
             <hr>
             <div style="
-                position: relative;
+                position: initial;
                 margin: auto;
-                height: 55vh;
-                width: 55vw;">
+                height: 60vh;
+                width: 60vw;">
                 <div class="chart-container">
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="card" style="margin: 0.5em; padding: 0.5em; margin-top:2em;">
-        <div class="card-body">
-            
         </div>
     </div>
     <br>

@@ -1,4 +1,4 @@
-    <nav class="navbar navbar-dark bg-dark fixed-bottom">
+    <nav class="navbar navbar-bosch bg-bosch fixed-bottom" style="height:15px;">
         <a class="navbar-brand" >
            <br>
         </a>

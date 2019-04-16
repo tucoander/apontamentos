@@ -46,7 +46,7 @@
             print '
         
                 <div style="margin: 1em; padding: 1em;">
-                    <div class="chart-container" style="position: relative; height:30vh; width:60vw" >
+                    <div class="chart-container" style="position: relative; height:55vh; width:55vw" >
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>

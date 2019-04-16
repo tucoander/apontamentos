@@ -13,6 +13,7 @@ jQuery(document).ready(function(){
         // pegando os campos do formulário
         var old_usrpsw = jQuery("#old_usrpsw").val();
         var new_usrpsw = jQuery("#new_usrpsw").val();
+        var new_usrpsw_c = jQuery("#new_usrpsw_c").val();
        
         
         // tipo dos dados, url do documento, tipo de dados, campos enviados    
@@ -21,7 +22,7 @@ jQuery(document).ready(function(){
             type: "POST",
             url: "usuario-senha-exe.php",
             dataType: "html",
-            data: {old_usrpsw: old_usrpsw, new_usrpsw: new_usrpsw},
+            data: {old_usrpsw: old_usrpsw, new_usrpsw: new_usrpsw, new_usrpsw_c: new_usrpsw_c},
         // enviado com sucesso
             success: function(response){
                 jQuery("#res").append(response);

@@ -4,12 +4,8 @@
     $s_tbllog = "";
 ?>
 
-<div class="alert alert-success" role="alert" id="res">
-    
-</div>
-<main role="main" class="class="container"">
-    
-    <div class="card" style="margin: 1em; padding: 1em; margin-top:3em;">
+<main role="main" class="container-fluid">
+    <div class="card">
         <div class="card-body">
         <?php
        if(isset($_POST['filtro'])){

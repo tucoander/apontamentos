@@ -1,5 +1,7 @@
 <?php
 
+
+
 $projeto = preg_split('/(\/)/', $_SERVER['PHP_SELF']) ;
  
     
@@ -69,7 +71,7 @@ if ($_SESSION["usrlog"]) {
 <body>
     <div >
     <nav class="navbar navbar-expand-lg navbar-bosch bg-bosch fixed-top"  >
-        <a class="navbar-brand" href="#"> <img src="../../img/Bosch-logo.png" height="29px" class="d-inline-block align-top" alt=""></a>
+        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -122,3 +124,45 @@ if ($_SESSION["usrlog"]) {
             <span class="badge badge-secondary"> <?php print $_SESSION["usr_id"]; ?></span>
         </a>
     </nav>
+    <br>
+    
+   
+    <?php 
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+ 
+    function getBrowser($user_agent){
+     
+        if(strpos($user_agent, 'MSIE') !== FALSE)
+            return 'Internet explorer';
+        elseif(strpos($user_agent, 'Edge') !== FALSE) //Microsoft Edge
+            return 'Microsoft Edge';
+        elseif(strpos($user_agent, 'Trident') !== FALSE) //IE 11
+            return 'Internet explorer';
+        elseif(strpos($user_agent, 'Opera Mini') !== FALSE)
+            return "Opera Mini";
+        elseif(strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR') !== FALSE)
+            return "Opera";
+        elseif(strpos($user_agent, 'Firefox') !== FALSE)
+            return 'Mozilla Firefox';
+        elseif(strpos($user_agent, 'Chrome') !== FALSE)
+            return 'Google Chrome';
+        elseif(strpos($user_agent, 'Safari') !== FALSE)
+            return "Safari";
+        else
+            return 'Não Identificado';
+     
+    }
+    $retorno = '<p></p>';
+    $navegador = getBrowser($user_agent);
+    if($navegador != 'Mozilla Firefox'){
+        $retorno = '<p>Esse programa é otimizado para uso no Firefox. Clique <a href="https://www.mozilla.org/pt-BR/firefox/new/" >aqui</a>.</p>';
+    }
+    
+    ?>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-10 float-right" ><?php print $retorno;?></div>
+            <div class="col float-left"><p><a href="#"><img src="../../img/Bosch-logo.png" height="35px" alt=""></a></p></div>
+        </div>
+    </div>

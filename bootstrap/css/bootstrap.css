@@ -6198,10 +6198,10 @@ button.bg-light:focus {
 
 .bg-bosch {
   background: url('../../img/bosch-faixa.png') !important;
-  background-size: 100%;
+  background-size: 90%;
   width: 101%; 
   margin-left: -10px; 
-  margin-right: -5px;
+  margin-right: -10px;
 }
 
 a.bg-dark:hover, a.bg-dark:focus,

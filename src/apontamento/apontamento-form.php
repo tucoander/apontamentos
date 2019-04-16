@@ -3,8 +3,8 @@
 ?>
 <link href="mdtimepicker.css" rel="stylesheet">
 
-<main role="main" class="class="container"">
-    <div class="card" style="margin: 1em; padding: 1em; margin-top:3em;">
+<main role="main" class="container-fluid">
+    <div class="card">
         <div class="card-body">
             <h1>Lançamento de Horas</h1>
             <hr>

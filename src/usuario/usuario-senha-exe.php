@@ -7,6 +7,7 @@
        
         $_old_usrpsw = md5($_POST['old_usrpsw']);
         $_new_usrpsw = md5($_POST['new_usrpsw']);
+        $_new_usrpsw_c = md5($_POST['new_usrpsw_c']);
 
         if($_old_usrpsw == $_new_usrpsw){
             print 
@@ -38,28 +39,38 @@
                 </div>
                 ';
             }else{
-                $u_tblusr = "
-                UPDATE usrsys 
-                    SET usrpsw = :usrpsw
-                    WHERE usr_id = :usr_id
-                ";
-                $cmd_db = $db->prepare($u_tblusr);
-                $cmd_db->bindValue('usr_id', $_usr_id);
-                $cmd_db->bindValue('usrpsw', $_new_usrpsw);
-                $resultado = $cmd_db->execute();
-
-                print '
-                <script language= "JavaScript">
-                    var delay=250;
-                    setTimeout(function(){
-                        window.location.replace("../apontamento/apontamento-form.php");
-                    },delay);
-                </script>
-                <br>
-                <div class="alert alert-success" role="alert">
-                    Senha alterada com sucesso.
-                </div>
-                ';
+                if($_new_usrpsw_c != $_new_usrpsw){
+                    print '
+                    <br>
+                    <div class="alert alert-warning" role="alert">
+                        A nova senha informada não confere com a nova senha confirmada.
+                    </div>
+                    ';
+                }
+                else{
+                    $u_tblusr = "
+                    UPDATE usrsys 
+                        SET usrpsw = :usrpsw
+                        WHERE usr_id = :usr_id
+                    ";
+                    $cmd_db = $db->prepare($u_tblusr);
+                    $cmd_db->bindValue('usr_id', $_usr_id);
+                    $cmd_db->bindValue('usrpsw', $_new_usrpsw);
+                    $resultado = $cmd_db->execute();
+    
+                    print '
+                    <script language= "JavaScript">
+                        var delay=250;
+                        setTimeout(function(){
+                            window.location.replace("../apontamento/apontamento-form.php");
+                        },delay);
+                    </script>
+                    <br>
+                    <div class="alert alert-success" role="alert">
+                        Senha alterada com sucesso.
+                    </div>
+                    ';
+                }
             }
         }
         
