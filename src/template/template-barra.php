@@ -69,7 +69,7 @@ if ($_SESSION["usrlog"]) {
 <body>
     <div >
     <nav class="navbar navbar-expand-lg navbar-bosch bg-bosch fixed-top"  >
-        <a class="navbar-brand" href="#"> <img src="../../img/logo1.png" height="29px" class="d-inline-block align-top" alt=""></a>
+        <a class="navbar-brand" href="#"> <img src="../../img/Bosch-logo.png" height="29px" class="d-inline-block align-top" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
