@@ -67,8 +67,9 @@ if ($_SESSION["usrlog"]) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#"> <img src="../../img/logo1.png" height="25" class="d-inline-block align-top" alt=""></a>
+    <div >
+    <nav class="navbar navbar-expand-lg navbar-bosch bg-bosch fixed-top"  >
+        <a class="navbar-brand" href="#"> <img src="../../img/logo1.png" height="29px" class="d-inline-block align-top" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -120,5 +121,4 @@ if ($_SESSION["usrlog"]) {
         <a href="../../">
             <span class="badge badge-secondary"> <?php print $_SESSION["usr_id"]; ?></span>
         </a>
-    </nav> 
-  
+    </nav>
