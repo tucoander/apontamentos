@@ -6198,10 +6198,13 @@ button.bg-light:focus {
 
 .bg-bosch {
   background: url('../../img/bosch-faixa.png');
-  background-position: left center;
+  background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-color: #942230;
 }
 
