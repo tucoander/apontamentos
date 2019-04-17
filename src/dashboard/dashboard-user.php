@@ -8,6 +8,7 @@
     $labels_script;
     $data_script;
     $tamanho;
+
     $msg = '';
 
     if(isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_adddte'])){
@@ -26,21 +27,24 @@
                     inner join usropr uo
                     on (ul.opr_id = uo.opr_id)
                 where ul.logdte between :fr_adddte and :to_adddte
+                 and ul.usr_id = :usr_id
                 group by
                 uo.opr_id,
                     uo.oprnme
                 order by 
                     ul.logdte asc
                 ";
-
+         
             $_usr_id = $_SESSION['usr_id'];
             $_fr_adddte = $_POST['fr_adddte'];
             $_to_adddte = $_POST['to_adddte'];
 
+          
             $cmd_db = $db->prepare($s_tbllog);
             $cmd_db->bindValue('fr_adddte', $_fr_adddte);
             $cmd_db->bindValue('to_adddte', $_to_adddte);
-        
+            $cmd_db->bindValue('usr_id', $_usr_id);
+
             $resultado = $cmd_db->execute();
            
             while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
@@ -74,17 +78,19 @@
             on (ul.cty_id = uc.cty_id)
             inner join usropr uo
             on (ul.opr_id = uo.opr_id)
+        where ul.usr_id = :usr_id
         group by
         uo.opr_id,
             uo.oprnme
         order by 
             ul.logdte asc
         ";
+        $tamanho = 'style="height: 35em;"';
         $_usr_id = $_SESSION['usr_id'];
-        
         $cmd_db = $db->prepare($s_tbllog);
-        
+        $cmd_db->bindValue('usr_id', $_usr_id);
         $resultado = $cmd_db->execute();
+        
 
         while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
             $labels[] = $row['oprnme'];
@@ -92,9 +98,9 @@
         }
         $labels_script = implode("', '",$labels);
         $data_script = implode("', '",$data);
-        $tamanho = 'style="height: 35em;"';
     }
     else{
+        
         $s_tbllog = "
         SELECT 
         uo.opr_id,
@@ -107,25 +113,27 @@
             on (ul.cty_id = uc.cty_id)
             inner join usropr uo
             on (ul.opr_id = uo.opr_id)
+        where ul.usr_id = :usr_id
         group by
             uo.opr_id,
             uo.oprnme
         order by 
             ul.logdte asc
         ";
-        $_usr_id = $_SESSION['usr_id'];
         
+        $_usr_id = $_SESSION['usr_id'];
+      
         $cmd_db = $db->prepare($s_tbllog);
-
+        $cmd_db->bindValue('usr_id', $_usr_id);
         $resultado = $cmd_db->execute();
-
+        
+        $tamanho = 'style="height: 35em;"';
         while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
             $labels[] = $row['oprnme'];
             $data[] = $row['diff_jd'];
         }
         $labels_script = implode("', '",$labels);
         $data_script = implode("', '",$data);
-        $tamanho = 'style="height: 35em;"';
     }
     
 	
@@ -134,7 +142,7 @@
 <main role="main" class="container-fluid">
     <div class="card" >
         <div class="card-body" <?php print $tamanho;?>>
-            <form method="POST" action="apontamento-dashboard.php">
+            <form method="POST" action="dashboard-user.php">
                 <div class="row">
                     <div class="col">
                     <input type="text" class="form-control-plaintext" value="Data Início:">

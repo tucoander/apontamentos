@@ -10,11 +10,12 @@ $projeto = preg_split('/(\/)/', $_SERVER['PHP_SELF']) ;
         "Index"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/",
         "Home"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/template/home.php",
         "Inserir" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-form.php",
-        "Visualizar" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-view.php",
+        "Tabela" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-view.php",
         "Operações" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-dashboard.php",
         "Produtos" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-produtos.php",
         "Alterar_senha" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/usuario/usuario-senha.php",
-        "Database"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/sqlite/apontamentos.db"
+        "Database"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/sqlite/apontamentos.db",
+        "Gráfico"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/dashboard/dashboard-user.php"
     );
 
 
@@ -79,12 +80,16 @@ if ($_SESSION["usrlog"]) {
                 <li class="nav-item active" >
                     <a class="nav-link" href="<?php print 'http://'.$site['Home'];?>">Home <span class="sr-only" ></span></a>
                 </li>
-
-                <li class="nav-item" >
-                    <a class="nav-link" href="<?php print 'http://'.$site['Inserir'];?>" >Inserir</a>
-                </li>
-                <li class="nav-item" >
-                    <a class="nav-link" href="<?php print 'http://'.$site['Visualizar'];?>" >Visualizar</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Lançamentos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       
+                        <a class="dropdown-item" href="<?php print 'http://'.$site['Gráfico'];?>">Gráfico</a>
+                        <a class="dropdown-item" href="<?php print 'http://'.$site['Inserir'];?>" >Inserir</a>
+                        <a class="dropdown-item" href="<?php print 'http://'.$site['Tabela'];?>">Tabela</a>
+                    </div>
                 </li>
                 <?php 
                 if($auth){
@@ -96,7 +101,6 @@ if ($_SESSION["usrlog"]) {
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						  <a class="dropdown-item" href="http://'.$site['Operações'].'">Operações</a>
 						  <a class="dropdown-item" href="http://'.$site['Produtos'].'">Produtos</a>
-						  <a class="dropdown-item" href="#">Working here</a>
 						</div>
 					</li>
                     
