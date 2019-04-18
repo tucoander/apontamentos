@@ -4,10 +4,15 @@
 
     $labels = array();
     $data = array();
+    $data_perc = array();
 
     $labels_script;
     $data_script;
+
+    $soma_hora = 0;
     $tamanho;
+
+    $table = '';
     $msg = '';
 
     if(isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_adddte'])){
@@ -48,9 +53,6 @@
                 $data[] = $row['diff_jd'];
             }
 
-            $labels_script = implode("', '",$labels);
-            $data_script = implode("', '",$data);
-
             $msg = 'Intervalo Pesquisado: ';
             $msg .= date("d/m/Y",strtotime($_POST['fr_adddte']));
             $msg .= ' até ';
@@ -90,8 +92,6 @@
             $labels[] = $row['oprnme'];
             $data[] = $row['diff_jd'];
         }
-        $labels_script = implode("', '",$labels);
-        $data_script = implode("', '",$data);
         $tamanho = 'style="height: 35em;"';
     }
     else{
@@ -123,11 +123,45 @@
             $labels[] = $row['oprnme'];
             $data[] = $row['diff_jd'];
         }
-        $labels_script = implode("', '",$labels);
-        $data_script = implode("', '",$data);
         $tamanho = 'style="height: 35em;"';
     }
     
+    foreach($data as $rowsoma){
+        $soma_hora = $soma_hora + $rowsoma;
+    }
+
+    foreach($data as $row){
+        $data_perc[] = round($row / $soma_hora,4) * 100;
+    }
+
+    $table = '
+    <table class="table" id="apontamento">
+        <thead>
+            <tr>
+            <th scope="col">Operação</th>
+            <th scope="col">Percentual</th>
+            <th scope="col">Horas</th>
+        </thead>
+        <tbody>
+    ';
+
+    foreach($data as $key=>$value){
+        $table .= '
+        <tr>
+            <td scope="row">'.$labels[$key].'</td>
+            <td>'.$data_perc[$key].' %</td>
+            <td>'.floor($value).'h'.floor(($value-floor($value))*60).'m</td>
+        <tr>
+        ';
+
+    }
+    $table .= '
+    </tbody>
+    ';
+
+    $data_perc_script = implode("', '",$data_perc);
+	$labels_script = implode("', '",$labels);
+    $data_script = implode("', '",$data);
 	
 ?>
 
@@ -173,6 +207,7 @@
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
+            <?php print '<div>'.$table.'</div>';?>
         </div>
     </div>
     <br>
@@ -197,10 +232,17 @@
                 'rgb(0, 142, 207)',
                 'rgb(0, 86, 145)',
                 'rgb(80, 36, 127)',
-                'rgb(185, 2, 118)'
+                'rgb(185, 2, 118)',
+                'rgb(0, 78, 53)',
+                'rgb(120, 170, 12)',
+                'rgb(0, 148, 156)',
+                'rgb(0, 122, 187)',
+                'rgb(0, 66, 125)',
+                'rgb(80, 16, 107)',
+                'rgb(185, 2, 98)'
             ],
             borderColor: 'rgb(255, 255, 255)',
-            data: [' <?php print $data_script;?> ']
+            data: [' <?php print $data_perc_script;?> ']
         }]
     },
 
