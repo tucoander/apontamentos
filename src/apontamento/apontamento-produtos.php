@@ -27,15 +27,17 @@
 
                             $s_tblprd = "
                                 SELECT 
-                                us.usr_id
+                                us.usr_id,
+                                us.usrnme
                                     FROM usrsys us
                                     GROUP BY 
-                                    us.usr_id
+                                    us.usr_id,
+                                    us.usrnme
                                 ";
                             $resultado = $db->query($s_tblprd);
                             while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
                                 print '
-                                <option value="'.$row["usr_id"].'">'.$row["usr_id"].'</option>
+                                <option value="'.$row["usr_id"].'">'.$row["usr_id"].' - '.$row["usrnme"].'</option>
                                 ';
                             }
                         ?>
