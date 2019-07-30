@@ -5,6 +5,6 @@ RewriteEngine On
 Options All -Indexes
 
 # Custom Erros
-ErrorDocument 403 /001_apontar/src/erros/403.html
-ErrorDocument 404 /001_apontar/src/erros/404.html
-ErrorDocument 500 /001_apontar/src/erros/403.html
+ErrorDocument 403 /src/erros/403.html
+ErrorDocument 404 /src/erros/404.html
+ErrorDocument 500 /src/erros/403.html

@@ -41,7 +41,7 @@
 			</div>
 			<script language= "JavaScript">
 				var delay=10000;
-				setTimeout(console.log("Logando...."),delay);
+				setTimeout(console.log("Logando..."),delay);
 			</script>
 			';
 			header("Location: ./src/apontamento/apontamento-form.php");
