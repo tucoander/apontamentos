@@ -5,7 +5,7 @@
     </nav>
     <!-- JavaScript (Opcional) -->
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
-    <script src="../../jquery/jquery-3.3.1.min.js"></script>
+    <script src="../../jquery/jquery-3.4.1.min.js"></script>
     <script src="../../popper/popper.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
     <script src="../../mdt/js/mdtimepicker.js"></script>
