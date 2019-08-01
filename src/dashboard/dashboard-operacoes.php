@@ -306,6 +306,7 @@
             WHERE 
                     substr(logdte, 0,8) = substr(date(),0,8)
             ";
+
         $cmd_db_usr = $db->prepare($s_qtdusr);
         
         $s_hrsdis = "
@@ -318,6 +319,8 @@
                 from usrlog where substr(logdte, 0,8) = substr(date(),0,8))
             and wk_day not in ('sábado', 'domingo')";
         $cmd_db_dsp = $db->prepare($s_hrsdis);
+
+ 
 
         $s_hrsapp = "
         SELECT 
@@ -340,12 +343,9 @@
         ";
 
         $s_hr_indis = "
-        SELECT sum((julianday(to_logtim) - julianday(fr_logtim))*24) as hr_inds
-            FROM yr_idx 
-            left join usrind 
-            on ((yr_dte||'-'||mn_dte||'-'||dy_dte) = inddte) 
-            ORDER BY dy_dte asc,
-                    mn_dte asc
+        SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) as hr_inds
+            from usrind 
+        where substr(inddte, 0,8) = substr(date(),0,8);
         ";
 
         $_usr_id = $_SESSION['usr_id'];
