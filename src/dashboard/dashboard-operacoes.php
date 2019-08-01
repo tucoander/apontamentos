@@ -437,7 +437,16 @@
     foreach($data as $key=>$value){
         $table .= '
                     <tr>
-                        <td scope="row">'.$labels[$key].'</td>
+                        <td scope="row">
+                        <form method="POST" action="dashboard-detalhamento.php">
+                            <div class="col">
+                                <input type="submit" class="btn btn-light" name="filtro" value="'.$labels[$key].'">
+                                <input type="hidden" id="fr_adddte" name="fr_adddte" value="'.$_fr_adddte.'">
+                                <input type="hidden" id="to_adddte" name="to_adddte" value="'.$_to_adddte.'">
+                                <input type="hidden" id="oprnme" name="oprnme" value="'.$labels[$key].'">
+                            </div>
+                        </form>
+                        </td>
                         <td>'.$data_perc[$key].' %</td>
                         <td>'.floor($value).'h'.floor(($value-floor($value))*60).'m</td>
                     </tr>
@@ -452,8 +461,8 @@
                 <form method="POST" action="dashboard-disponibilidade.php">
                     <div class="col">
                         <input type="submit" class="btn btn-light" name="filtro" value="Disponível">
-                        <input type="hidden" id="custId" name="fr_adddte" value="'.$_fr_adddte.'">
-                        <input type="hidden" id="custId" name="to_adddte" value="'.$_to_adddte.'">
+                        <input type="hidden" id="fr_adddte" name="fr_adddte" value="'.$_fr_adddte.'">
+                        <input type="hidden" id="to_adddte" name="to_adddte" value="'.$_to_adddte.'">
                     </div>
                 </form>
                 </td>
