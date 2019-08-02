@@ -345,7 +345,10 @@
         $s_hr_indis = "
         SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) as hr_inds
             from usrind 
-        where substr(inddte, 0,8) = substr(date(),0,8);
+        where inddte between (select min(logdte)
+                                from usrlog where substr(logdte, 0,8) = substr(date(),0,8))
+                        and (select max(logdte)
+                        from usrlog where substr(logdte, 0,8) = substr(date(),0,8));
         ";
 
         $_usr_id = $_SESSION['usr_id'];
