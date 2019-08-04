@@ -1,2 +1,2 @@
 # apontamentos
-# apontarmentos
+Página dedicada ao lançamento de atividades diárias
