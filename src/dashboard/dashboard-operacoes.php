@@ -499,7 +499,7 @@
 ?>
 
 <div role="main" class="container-fluid">
-    <div class="card" >
+    <div class="card">
         <div class="card-body" <?php print $tamanho;?>>
             <form method="POST" action="dashboard-operacoes.php">
                 <div class="row">
@@ -519,16 +519,16 @@
                         <input type="submit" class="btn btn-primary col-12" name="filtro" value="Filtrar">
                     </div>
                     <div class="col">
-                        <input type="submit" class="btn btn-primary col-12" name="todos" value="Limpar Filtro" >
+                        <input type="submit" class="btn btn-primary col-12" name="todos" value="Limpar Filtro">
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                   
-                        <div class="col-2">
-                            <input type="text" class="form-control-plaintext" value="Usuário:">
-                        </div>
-                        <div class="col-6">
+
+                    <div class="col-2">
+                        <input type="text" class="form-control-plaintext" value="Usuário:">
+                    </div>
+                    <div class="col-6">
                         <select class="custom-select d-block w-100" id="usr_id" name="usr_id" onchange="">
                             <option value="">Selecione...</option>
                             <?php
@@ -549,13 +549,13 @@
                                     ';
                                 }
                             ?>
-                        </select>    
-                        
-                        </div>
-                    
+                        </select>
+
+                    </div>
+
                 </div>
             </form>
-            <div>     
+            <div>
                 <?php
                     if(!empty($msg)){
                         print '<hr>'.$msg;
@@ -563,7 +563,7 @@
                 ?>
             </div>
             <hr>
-            <div >
+            <div>
                 <div class="chart-container">
                     <canvas id="myChart"></canvas>
                 </div>
@@ -575,49 +575,52 @@
 </div>
 
 <div>
-<?php
+    <?php
     include('../template/template-rodape.php');
 ?>
-<script>
+    <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'doughnut',
-		responsive: true,
-        data: {
-        labels: ['Disponível','<?php print $labels_script;?> '],
-        datasets: [{
-            label: 'Operações',
-            backgroundColor: [
-                'rgb( 50, 50, 50)',
-                'rgb(0, 86, 145)',
-                'rgb(0, 142, 207)',
-                'rgb(0, 168, 176)',
-                'rgb(120, 190, 32)',
-                'rgb(0, 98, 73)',
-                'rgb(185, 2, 118)',
-                'rgb(80, 35, 127)',
-                'rgb(82, 95, 107)',
-                'rgb(191, 192, 194)',
-                'rgb(0, 86, 145)',
-                'rgb(0, 142, 207)',
-                'rgb(0, 168, 176)',
-                'rgb(120, 190, 32)',
-                'rgb(0, 98, 73)',
-                'rgb(185, 2, 118)',
-                'rgb(80, 35, 127)',
-                'rgb(82, 95, 107)',
-                'rgb(191, 192, 194)'
-            ],
-            borderColor: 'rgb(255, 255, 255)',
-            data: ['<?php print (round($soma_hora / $disponibilidade_total,4) * 100);?> ',' <?php print $data_perc_script;?> ']
-        }]
-    },
-
-    // Configuration options go here
-    options: {
         responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 2.5 }
+        data: {
+            labels: ['Disponível', '<?php print $labels_script;?> '],
+            datasets: [{
+                label: 'Operações',
+                backgroundColor: [
+                    'rgb( 50, 50, 50)',
+                    'rgb(0, 86, 145)',
+                    'rgb(0, 142, 207)',
+                    'rgb(0, 168, 176)',
+                    'rgb(120, 190, 32)',
+                    'rgb(0, 98, 73)',
+                    'rgb(185, 2, 118)',
+                    'rgb(80, 35, 127)',
+                    'rgb(82, 95, 107)',
+                    'rgb(191, 192, 194)',
+                    'rgb(0, 86, 145)',
+                    'rgb(0, 142, 207)',
+                    'rgb(0, 168, 176)',
+                    'rgb(120, 190, 32)',
+                    'rgb(0, 98, 73)',
+                    'rgb(185, 2, 118)',
+                    'rgb(80, 35, 127)',
+                    'rgb(82, 95, 107)',
+                    'rgb(191, 192, 194)'
+                ],
+                borderColor: 'rgb(255, 255, 255)',
+                data: ['<?php print (round($soma_hora / $disponibilidade_total,4) * 100);?> ',
+                    ' <?php print $data_perc_script;?> '
+                ]
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2.5
+        }
     });
-</script>
+    </script>
 </div>

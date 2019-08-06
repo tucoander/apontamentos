@@ -166,31 +166,31 @@
 ?>
 
 <main role="main" class="container-fluid">
-    <div class="card" >
+    <div class="card">
         <div class="card-body" <?php print $tamanho;?>>
             <form method="POST" action="dashboard-produtos.php">
                 <div class="row">
                     <div class="col">
-                    <input type="text" class="form-control-plaintext" value="Data Início:">
+                        <input type="text" class="form-control-plaintext" value="Data Início:">
                     </div>
                     <div class="col">
-                    <input type="date" class="form-control" placeholder="Data" id="fr_adddte" name="fr_adddte">
+                        <input type="date" class="form-control" placeholder="Data" id="fr_adddte" name="fr_adddte">
                     </div>
                     <div class="col">
-                    <input type="text" class="form-control-plaintext" value="Data Final:">
+                        <input type="text" class="form-control-plaintext" value="Data Final:">
                     </div>
                     <div class="col">
-                    <input type="date" class="form-control" placeholder="Data" id="to_adddte" name="to_adddte">
+                        <input type="date" class="form-control" placeholder="Data" id="to_adddte" name="to_adddte">
                     </div>
                     <div class="col">
-                    <input type="submit" class="btn btn-primary col-12" name="filtro" value="Filtrar">
+                        <input type="submit" class="btn btn-primary col-12" name="filtro" value="Filtrar">
                     </div>
                     <div class="col">
-                    <input type="submit" class="btn btn-primary col-12" name="todos" value="Limpar Filtro" >
+                        <input type="submit" class="btn btn-primary col-12" name="todos" value="Limpar Filtro">
                     </div>
                 </div>
             </form>
-            <div>     
+            <div>
                 <?php
                     if(!empty($msg)){
                         print '<hr>'.$msg;
@@ -220,67 +220,67 @@
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'doughnut',
-		responsive: true,
+        responsive: true,
         data: {
-        labels: ['<?php print $labels_script;?> '],
-        datasets: [{
-            label: 'Operações',
-            backgroundColor: [
-                'rgb(0, 98, 73)',
-                'rgb(120, 190, 32)',
-                'rgb(0, 168, 176)',
-                'rgb(0, 142, 207)',
-                'rgb(0, 86, 145)',
-                'rgb(80, 36, 127)',
-                'rgb(185, 2, 118)',
-                'rgb(0, 78, 53)',
-                'rgb(120, 170, 12)',
-                'rgb(0, 148, 156)',
-                'rgb(0, 122, 187)',
-                'rgb(0, 66, 125)',
-                'rgb(80, 16, 107)',
-                'rgb(185, 2, 98)',
-                'rgb(0, 78, 53)',
-                'rgb(120, 170, 12)',
-                'rgb(0, 148, 156)',
-                'rgb(0, 122, 187)',
-                'rgb(0, 66, 125)',
-                'rgb(80, 16, 107)',
-                'rgb(185, 2, 98)',
-                'rgb(0, 98, 73)',
-                'rgb(120, 190, 32)',
-                'rgb(0, 168, 176)',
-                'rgb(0, 142, 207)',
-                'rgb(0, 86, 145)',
-                'rgb(80, 36, 127)',
-                'rgb(185, 2, 118)',
-                'rgb(0, 78, 53)',
-                'rgb(120, 170, 12)',
-                'rgb(0, 148, 156)',
-                'rgb(0, 122, 187)',
-                'rgb(0, 66, 125)',
-                'rgb(80, 16, 107)',
-                'rgb(185, 2, 98)',
-                'rgb(0, 78, 53)',
-                'rgb(120, 170, 12)',
-                'rgb(0, 148, 156)',
-                'rgb(0, 122, 187)',
-                'rgb(0, 66, 125)',
-                'rgb(80, 16, 107)',
-                'rgb(185, 2, 98)'
-            ],
-            borderColor: 'rgb(255, 255, 255)',
-            data: [' <?php print $data_perc_script;?> ']
-        }]
-    },
+            labels: ['<?php print $labels_script;?> '],
+            datasets: [{
+                label: 'Operações',
+                backgroundColor: [
+                    'rgb(0, 98, 73)',
+                    'rgb(120, 190, 32)',
+                    'rgb(0, 168, 176)',
+                    'rgb(0, 142, 207)',
+                    'rgb(0, 86, 145)',
+                    'rgb(80, 36, 127)',
+                    'rgb(185, 2, 118)',
+                    'rgb(0, 78, 53)',
+                    'rgb(120, 170, 12)',
+                    'rgb(0, 148, 156)',
+                    'rgb(0, 122, 187)',
+                    'rgb(0, 66, 125)',
+                    'rgb(80, 16, 107)',
+                    'rgb(185, 2, 98)',
+                    'rgb(0, 78, 53)',
+                    'rgb(120, 170, 12)',
+                    'rgb(0, 148, 156)',
+                    'rgb(0, 122, 187)',
+                    'rgb(0, 66, 125)',
+                    'rgb(80, 16, 107)',
+                    'rgb(185, 2, 98)',
+                    'rgb(0, 98, 73)',
+                    'rgb(120, 190, 32)',
+                    'rgb(0, 168, 176)',
+                    'rgb(0, 142, 207)',
+                    'rgb(0, 86, 145)',
+                    'rgb(80, 36, 127)',
+                    'rgb(185, 2, 118)',
+                    'rgb(0, 78, 53)',
+                    'rgb(120, 170, 12)',
+                    'rgb(0, 148, 156)',
+                    'rgb(0, 122, 187)',
+                    'rgb(0, 66, 125)',
+                    'rgb(80, 16, 107)',
+                    'rgb(185, 2, 98)',
+                    'rgb(0, 78, 53)',
+                    'rgb(120, 170, 12)',
+                    'rgb(0, 148, 156)',
+                    'rgb(0, 122, 187)',
+                    'rgb(0, 66, 125)',
+                    'rgb(80, 16, 107)',
+                    'rgb(185, 2, 98)'
+                ],
+                borderColor: 'rgb(255, 255, 255)',
+                data: [' <?php print $data_perc_script;?> ']
+            }]
+        },
 
-    // Configuration options go here
-    options: {
-        layout: {
-            padding: {
-                responsive: true
+        // Configuration options go here
+        options: {
+            layout: {
+                padding: {
+                    responsive: true
+                }
             }
         }
-    }
     });
 </script>
