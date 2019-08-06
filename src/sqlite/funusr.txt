@@ -1,0 +1,61 @@
+-- Comando create tabla
+create table funusr (
+    fun_id integer,
+    usr_id text
+)
+
+-- Comando de insert
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (6, 'FAA5LOV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (7, 'DOM9ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (4, 'LOD9LOV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'BOM5ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (4, 'ROW5LOV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'BAF8LOV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (4, 'BA76CA');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (2, 'HDI1SP');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (7, 'FOM9LOV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (4, 'PEM9ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (5, 'SPL6CA');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (5, 'SBA1CA');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (7, 'VIR6JVL');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (7, 'FAW9ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (7, 'ROM9LOV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'ANA1ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'SLG1ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'SIR9ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'ABF3SP');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'THG9ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (8, 'GAD9LOV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (7, 'FTL8CA');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (5, 'SGZ1CA');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (10, 'COG6ITV');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (1, 'CLU1CA');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (2, 'LIT6CA');
+INSERT INTO `funusr` (fun_id, usr_id)
+VALUES (4, 'AND9ITV');
