@@ -1,0 +1,29 @@
+Comando create tabla
+create table usrfun (
+    fun_id integer PRIMARY KEY,
+    fundsc text NOT NULL,
+    funidx number REAL NOT NULL
+)
+
+Comando de insert
+
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (1,'Gerente', 1.5);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (2,'Chefe', 1.35);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (3,'Supervisor/Coordenador', 1.2);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (4,'Analista Sr', 1.05);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (5,'Analista Pl 0,9', 0.9);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (6,'Analista Jr', 0.75);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (7,'Assistente Sr', 0.6);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (8,'Assistente Pl', 0.45);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (9,'Assistente Jr', 0.3);
+INSERT INTO `usrfun` (fun_id, fundsc, funidx)
+VALUES (10,'Estagiário', 0.15);
