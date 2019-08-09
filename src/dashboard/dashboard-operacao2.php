@@ -33,16 +33,14 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
             // select qtd usuarios
             $sel_dsp = "
 					SELECT
-						sum(shftim) as disponibilidade,
-						sum(indice) as dispon_index
+						sum(shftim) as disponibilidade
 					FROM
 						(
 						SELECT
 							(yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
 							ul.usr_id,
 							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx) as indice
+							uf.funidx
 						FROM
 							yr_idx yi
 							inner join usrlog ul 
@@ -59,15 +57,13 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
 							(yr_dte || '-' || mn_dte || '-' || dy_dte),
 							ul.usr_id,
 							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx)
+							uf.funidx
 						UNION
 						SELECT
 							(yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
 							ui.usr_id,
 							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx) as indice
+							uf.funidx
 						FROM
 							yr_idx yi
 							inner join usrind ui
@@ -84,19 +80,19 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
 							(yr_dte || '-' || mn_dte || '-' || dy_dte),
 							ui.usr_id,
 							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx)
+							uf.funidx
 						)
 					";
             $cmd_dsp = $db->prepare($sel_dsp);
             $cmd_dsp->bindValue('usr_id', $_POST['usr_id']);
+            $res_dsp = $cmd_dsp->execute();
 
 
             $sel_app = "
 				select 
 					op.oprnme,
 					count(distinct ul.usr_id),
-					sum((julianday(to_logtim) - julianday(fr_logtim))*24 * uf.funidx) as diff_jd
+					sum((julianday(to_logtim) - julianday(fr_logtim))*24 * 1) as diff_jd
 				from 
 					usrlog ul 
 					inner join usrprd pr 
@@ -117,9 +113,10 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
 				";
             $cmd_app = $db->prepare($sel_app);
             $cmd_app->bindValue('usr_id', $_POST['usr_id']);
+            $res_app = $cmd_app->execute();
 
             $sel_ind = "
-				SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * uf.funidx as hr_inds
+				SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * 1 as hr_inds
 					from usrind ul
 					 inner join funusr fu 
 					on (ul.usr_id = fu.usr_id) 
@@ -130,20 +127,19 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
 				";
             $cmd_ind = $db->prepare($sel_ind);
             $cmd_ind->bindValue('usr_id', $_POST['usr_id']);
+            $res_ind = $cmd_ind->execute();
         } else {
             // select padrão do grafico do apontamento qtd usuarios
             $sel_dsp = "
                 SELECT
-                    sum(shftim) as disponibilidade,
-                    sum(indice) as dispon_index
+                    sum(shftim) as disponibilidade
                 FROM
                     (
                     SELECT
                         (yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
                         ul.usr_id,
                         yi.shftim,
-                        uf.funidx,
-                        (yi.shftim * uf.funidx) as indice
+                        uf.funidx
                     FROM
                         yr_idx yi
                         inner join usrlog ul 
@@ -159,15 +155,13 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
                         (yr_dte || '-' || mn_dte || '-' || dy_dte),
                         ul.usr_id,
                         yi.shftim,
-                        uf.funidx,
-                        (yi.shftim * uf.funidx)
+                        uf.funidx
                     UNION
                     SELECT
                         (yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
                         ui.usr_id,
                         yi.shftim,
-                        uf.funidx,
-                        (yi.shftim * uf.funidx) as indice
+                        uf.funidx
                     FROM
                         yr_idx yi
                         inner join usrind ui
@@ -183,8 +177,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
                         (yr_dte || '-' || mn_dte || '-' || dy_dte),
                         ui.usr_id,
                         yi.shftim,
-                        uf.funidx,
-                        (yi.shftim * uf.funidx)
+                        uf.funidx
                     )
 					";
             $cmd_dsp = $db->prepare($sel_dsp);
@@ -193,7 +186,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
 				select 
 					op.oprnme,
 					count(distinct ul.usr_id),
-					sum((julianday(to_logtim) - julianday(fr_logtim))*24 * uf.funidx) as diff_jd
+					sum((julianday(to_logtim) - julianday(fr_logtim))*24 * 1) as diff_jd
 				from 
 					usrlog ul 
 					inner join usrprd pr 
@@ -215,7 +208,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
 
 
             $sel_ind = "
-				SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * uf.funidx as hr_inds
+				SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * 1 as hr_inds
 					from usrind ul
 					 inner join funusr fu 
 					on (ul.usr_id = fu.usr_id) 
@@ -254,7 +247,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
             $indisponibilidade = $row;
         }
         
-        $disponibilidade_total = (($disponibilidade['dispon_index']) * (1 - $perc_fadiga) - $indisponibilidade['hr_inds'] * (1 - $perc_fadiga));
+        $disponibilidade_total = (($disponibilidade['disponibilidade']) * (1 - $perc_fadiga) - $indisponibilidade['hr_inds'] * (1 - $perc_fadiga));
 
         $msg = 'Intervalo Pesquisado: ';
         $msg .= date("d/m/Y", strtotime($_POST['fr_adddte']));
@@ -272,16 +265,14 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
 } else if (isset($_POST['todos'])) {
     $sel_dsp = "
         SELECT
-            sum(shftim) as disponibilidade,
-            sum(indice) as dispon_index
+            sum(shftim) as disponibilidade
         FROM
             (
             SELECT
                 (yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
                 ul.usr_id,
                 yi.shftim,
-                uf.funidx,
-                (yi.shftim * uf.funidx) as indice
+                uf.funidx
             FROM
                 yr_idx yi
                 inner join usrlog ul 
@@ -297,15 +288,13 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
                 (yr_dte || '-' || mn_dte || '-' || dy_dte),
                 ul.usr_id,
                 yi.shftim,
-                uf.funidx,
-                (yi.shftim * uf.funidx)
+                uf.funidx
             UNION
             SELECT
                 (yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
                 ui.usr_id,
                 yi.shftim,
-                uf.funidx,
-                (yi.shftim * uf.funidx) as indice
+                uf.funidx
             FROM
                 yr_idx yi
                 inner join usrind ui
@@ -316,7 +305,6 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
                 on (fu.fun_id = uf.fun_id)
             WHERE
                 wk_day not in ('sábado', 'domingo')
-                
             GROUP BY
                 (yr_dte || '-' || mn_dte || '-' || dy_dte),
                 ui.usr_id,
@@ -336,7 +324,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
         select 
             op.oprnme,
             count(distinct ul.usr_id),
-            sum((julianday(to_logtim) - julianday(fr_logtim))*24 * uf.funidx) as diff_jd
+            sum((julianday(to_logtim) - julianday(fr_logtim))*24 * 1) as diff_jd
         from 
             usrlog ul 
             inner join usrprd pr 
@@ -362,7 +350,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
     }
 
     $sel_ind = "
-        SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * uf.funidx as hr_inds
+        SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * 1 as hr_inds
             from usrind ul
              inner join funusr fu 
             on (ul.usr_id = fu.usr_id) 
@@ -378,22 +366,20 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
         $indisponibilidade = $row;
     }
 
-    $disponibilidade_total = (($disponibilidade['dispon_index']) * (1 - $perc_fadiga) - $indisponibilidade['hr_inds'] * (1 - $perc_fadiga));
+    $disponibilidade_total = (($disponibilidade['disponibilidade']) * (1 - $perc_fadiga) - $indisponibilidade['hr_inds'] * (1 - $perc_fadiga));
 
     $tamanho = 'style="height: 50em;"';
 } else {
     $sel_dsp = "
         SELECT
-            sum(shftim) as disponibilidade,
-            sum(indice) as dispon_index
+            sum(shftim) as disponibilidade
         FROM
             (
             SELECT
                 (yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
                 ul.usr_id,
                 yi.shftim,
-                uf.funidx,
-                (yi.shftim * uf.funidx) as indice
+                uf.funidx
             FROM
                 yr_idx yi
                 inner join usrlog ul 
@@ -409,15 +395,13 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
                 (yr_dte || '-' || mn_dte || '-' || dy_dte),
                 ul.usr_id,
                 yi.shftim,
-                uf.funidx,
-                (yi.shftim * uf.funidx)
+                uf.funidx
             UNION
             SELECT
                 (yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
                 ui.usr_id,
                 yi.shftim,
-                uf.funidx,
-                (yi.shftim * uf.funidx) as indice
+                uf.funidx
             FROM
                 yr_idx yi
                 inner join usrind ui
@@ -433,8 +417,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
                 (yr_dte || '-' || mn_dte || '-' || dy_dte),
                 ui.usr_id,
                 yi.shftim,
-                uf.funidx,
-                (yi.shftim * uf.funidx)
+                uf.funidx
             )
         ";
     $cmd_dsp = $db->prepare($sel_dsp);
@@ -448,7 +431,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
         select 
             op.oprnme,
             count(distinct ul.usr_id),
-            sum((julianday(to_logtim) - julianday(fr_logtim))*24 * uf.funidx) as diff_jd
+            sum((julianday(to_logtim) - julianday(fr_logtim))*24 * 1) as diff_jd
         from 
             usrlog ul 
             inner join usrprd pr 
@@ -487,7 +470,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
     }
 
     $sel_ind = "
-        SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * uf.funidx as hr_inds
+        SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * 1 as hr_inds
             from usrind ul
              inner join funusr fu 
             on (ul.usr_id = fu.usr_id) 
@@ -507,7 +490,7 @@ if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
         $indisponibilidade = $row;
     }
 
-    $disponibilidade_total = (($disponibilidade['dispon_index']) * (1 - $perc_fadiga) - $indisponibilidade['hr_inds'] * (1 - $perc_fadiga));
+    $disponibilidade_total = (($disponibilidade['disponibilidade']) * (1 - $perc_fadiga) - $indisponibilidade['hr_inds'] * (1 - $perc_fadiga));
 
     $msg = 'Intervalo de dados: ';
     $msg .= date("m/Y");
@@ -578,7 +561,7 @@ if ($disponibilidade_total <> 0) {
     $table .= '
             <tr>
                 <td scope="row">
-                <form method="POST" action="dashboard-disponibilidade2.php">
+                <form method="POST" action="dashboard-disponibilidade.php">
                     <div class="col">
                         <input type="submit" class="btn btn-light" name="filtro" value="Disponível">
                         <input type="hidden" id="fr_adddte" name="fr_adddte" value="' . $_fr_adddte . '">

@@ -176,8 +176,7 @@ if (isset($_POST['oprnme']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
         data: {
             labels: ['<?php echo $labels_script; ?>'],
             datasets: [{
-                label: ['<?php echo $_POST['
-                        oprnme ']; ?>'],
+                label: ['<?php echo $_POST['oprnme']; ?>'],
                 backgroundColor: [
                     'rgb( 50, 50, 50)',
                     'rgb(0, 86, 145)',
@@ -220,7 +219,7 @@ if (isset($_POST['oprnme']) && isset($_POST['fr_adddte']) && isset($_POST['to_ad
                     'rgb(82, 95, 107)',
                     'rgb(191, 192, 194)'
                 ],
-                data: [ < ? php echo $data_script; ? > ]
+                data: [ <?php echo $data_script; ?> ]
             }]
         },
 
