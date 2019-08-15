@@ -1,213 +1,376 @@
 <?php
 include('../template/template-barra.php');
 $db = new SQLite3('../sqlite/apontamentos.db');
+/**
+ * Variaveis
+ */
+$lblgrp = array();
+$numgrp = array();
+$pergrp = array();
 
-$labels = array();
-$data = array();
-$data_perc = array();
+$fadiga = 0.146;
+$tamanho = 55;
+$select = '';
+$color = array (
+    'rgb(50, 50, 50)',
+    'rgb(0, 86, 145)',
+    'rgb(0, 142, 207)',
+    'rgb(0, 168, 176)',
+    'rgb(120, 190, 32)',
+    'rgb(0, 98, 73)',
+    'rgb(185, 2, 118)',
+    'rgb(80, 35, 127)',
+    'rgb(82, 95, 107)',
+    'rgb(191, 192, 194)',
+    'rgb(0, 86, 145)',
+    'rgb(0, 142, 207)',
+    'rgb(0, 168, 176)',
+    'rgb(120, 190, 32)',
+    'rgb(0, 98, 73)',
+    'rgb(185, 2, 118)',
+    'rgb(80, 35, 127)',
+    'rgb(82, 95, 107)',
+    'rgb(191, 192, 194)',
+    'rgb(50, 50, 50)',
+    'rgb(0, 86, 145)',
+    'rgb(0, 142, 207)',
+    'rgb(0, 168, 176)',
+    'rgb(120, 190, 32)',
+    'rgb(0, 98, 73)',
+    'rgb(185, 2, 118)',
+    'rgb(80, 35, 127)',
+    'rgb(82, 95, 107)',
+    'rgb(191, 192, 194)',
+    'rgb(0, 86, 145)',
+    'rgb(0, 142, 207)',
+    'rgb(0, 168, 176)',
+    'rgb(120, 190, 32)',
+    'rgb(0, 98, 73)',
+    'rgb(185, 2, 118)',
+    'rgb(80, 35, 127)',
+    'rgb(82, 95, 107)',
+    'rgb(191, 192, 194)'
+);
 
-$labels_script;
-$data_script;
+if(isset($_POST['oprnme']) && !empty($_POST['oprnme']) && $_POST['oprnme'] != 'Disponível'){
+    if(isset($_POST['fr_dte']) && $_POST['fr_dte'] == 'mes atual'){
+        $msg = 'Mês atual da operação '.$_POST['oprnme'];
 
-$soma_hora = 0;
-$tamanho;
+        $selapp = "
+            SELECT bd.user as user,
+                round(ifnull(sum((julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.to_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) - julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0))))) *24 * uf.funidx), 0), 2) as aponta
+            FROM (SELECT (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) days,
+                            (dt.shftim * uf.funidx) *(1 - ".$fadiga.") as shftim,
+                            us.usr_id as user
+                    FROM yr_idx dt
+                    join usrsys us
+                    left
+                    join funusr fu
+                        on (us.usr_id = fu.usr_id)
+                    left
+                    join usrfun uf
+                        on (fu.fun_id = uf.fun_id)
+                    WHERE dt.wk_day not in ('sábado', 'domingo')
+                        and us.usr_id in (select usr_id
+                                            from usrlog
+                                        where substr(logdte, 0, 8) = :fr_adddte)
+                        and (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) in (select logdte
+                                                                                    from usrlog
+                                                                                    where substr(logdte, 0, 8) = :fr_adddte)) bd
+            left
+            join usrlog ul
+                on (bd.days = (strftime('%Y-%m-%d', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) and bd.user = ul.usr_id)
+            left
+            join usrind ui
+                on (bd.days = ui.inddte and bd.user = ui.usr_id)
+            left
+            join usropr op
+                on (ul.opr_id = op.opr_id)
+            left
+            join usrprd pd
+                on (ul.prd_id = pd.prd_id)
+            left
+            join funusr fu
+                on (bd.user = fu.usr_id)
+            left
+            join usrfun uf
+                on (fu.fun_id = uf.fun_id)
+            WHERE substr(bd.days, 0, 8) = :fr_adddte
+                and op.oprnme = :oprnme
+            GROUP BY bd.user
+            ORDER BY bd.user asc
+        ";
 
-$table = '';
-$msg = '';
-$final = '';
-$users = array();
-$dados_usr = array();
-$perc_fadiga = 0.146;
-$disponibilidade = '';
-$disponibilidade_total = 0;
-
-// checar se as variaveis foram definidas, ou seja, o que veio pelo post
-if (isset($_POST['filtro']) && isset($_POST['fr_adddte']) && isset($_POST['to_adddte'])) {
-
-    if (!empty($_POST['fr_adddte']) && !empty($_POST['to_adddte'])) {
-
-        if (!empty($_POST['usr_id'])) {
-            // select qtd usuarios
-
-        } else {
-            $msg = 'Intervalo Pesquisado: ';
-            $msg .= date("d/m/Y", strtotime($_POST['fr_adddte']));
-            $msg .= ' até ';
-            $msg .= date("d/m/Y", strtotime($_POST['to_adddte']));
-            $msg .= $final;
-            $tamanho = 'style="height: 40em;"';
-            $s_qtdusr = "
-                SELECT 
-                    ul.usr_id as usuarios,
-                    us.usrnme as nome
-                FROM usrlog ul left join 
-                    usrsys us on (ul.usr_id = us.usr_id)
-                where ul.logdte between :fr_adddte and :to_adddte and ul.usr_id is not null
-                GROUP BY ul.usr_id,
-                us.usrnme
-					";
-            $cmd_db_usr = $db->prepare($s_qtdusr);
-            $_fr_adddte = $_POST['fr_adddte'];
-            $_to_adddte = $_POST['to_adddte'];
-            $cmd_db_usr->bindValue('fr_adddte', $_fr_adddte);
-            $cmd_db_usr->bindValue('to_adddte', $_to_adddte);
-            $resultado_usr = $cmd_db_usr->execute();
-
-            while ($row = $resultado_usr->fetchArray(SQLITE3_ASSOC)) {
-                $users[] = $row;
-
-                $sel_dsp = "
-					SELECT
-						sum(shftim) as disponibilidade,
-						sum(indice) as dispon_index
-					FROM
-						(
-						SELECT
-							(yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
-							ul.usr_id,
-							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx) as indice
-						FROM
-							yr_idx yi
-							inner join usrlog ul 
-							on ((yr_dte || '-' || mn_dte || '-' || dy_dte) = ul.logdte)
-							inner join funusr fu 
-							on (ul.usr_id = fu.usr_id) 
-							inner join usrfun uf 
-							on (fu.fun_id = uf.fun_id)
-						WHERE
-							wk_day not in ('sábado', 'domingo')
-							and ul.logdte between :fr_adddte and :to_adddte
-							and ul.usr_id = :usr_id 
-						GROUP BY
-							(yr_dte || '-' || mn_dte || '-' || dy_dte),
-							ul.usr_id,
-							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx)
-						UNION
-						SELECT
-							(yr_dte || '-' || mn_dte || '-' || dy_dte) as data,
-							ui.usr_id,
-							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx) as indice
-						FROM
-							yr_idx yi
-							inner join usrind ui
-							on ((yr_dte || '-' || mn_dte || '-' || dy_dte) = ui.inddte)
-							inner join funusr fu 
-							on (ui.usr_id = fu.usr_id) 
-							inner join usrfun uf 
-							on (fu.fun_id = uf.fun_id)
-						WHERE
-							wk_day not in ('sábado', 'domingo')
-							and ui.inddte between :fr_adddte and :to_adddte
-							and ui.usr_id = :usr_id 
-						GROUP BY
-							(yr_dte || '-' || mn_dte || '-' || dy_dte),
-							ui.usr_id,
-							yi.shftim,
-							uf.funidx,
-							(yi.shftim * uf.funidx)
-						)
-					";
-                $cmd_dsp = $db->prepare($sel_dsp);
-                $cmd_dsp->bindValue('usr_id', $$row['usuarios']);
-
-                $sel_app = "
-				select 
-					op.oprnme,
-					count(distinct ul.usr_id),
-					sum((julianday(to_logtim) - julianday(fr_logtim))*24 * uf.funidx) as diff_jd
-				from 
-					usrlog ul 
-					inner join usrprd pr 
-					on (ul.prd_id = pr.prd_id)
-					inner join usropr op 
-					on (ul.opr_id = op.opr_id) 
-					inner join funusr fu 
-					on (ul.usr_id = fu.usr_id) 
-					inner join usrfun uf 
-					on (fu.fun_id = uf.fun_id) 
-				where 
-					logdte between :fr_adddte and :to_adddte
-					and ul.usr_id = :usr_id 
-				group by
-					op.oprnme
-				order by 
-					op.opr_id
-				";
-                $cmd_app = $db->prepare($sel_app);
-                $cmd_app->bindValue('usr_id', $row['usuarios']);
-
-                $sel_ind = "
-                SELECT IFNULL(sum((julianday(to_logtim) - julianday(fr_logtim))*24),0) * uf.funidx as hr_inds
-                    from usrind ul
-                    inner join funusr fu 
-                    on (ul.usr_id = fu.usr_id) 
-                    inner join usrfun uf 
-                    on (fu.fun_id = uf.fun_id) 
-                where inddte between :fr_adddte and :to_adddte
-                and ul.usr_id = :usr_id 
-                ";
-                $cmd_ind = $db->prepare($sel_ind);
-                $cmd_ind->bindValue('usr_id', $_POST['usr_id']);
-
-                $cmd_dsp->bindValue('fr_adddte', $_POST['fr_adddte']);
-                $cmd_dsp->bindValue('to_adddte', $_POST['to_adddte']);
-                $res_dsp = $cmd_dsp->execute();
-
-                $cmd_app->bindValue('fr_adddte', $_POST['fr_adddte']);
-                $cmd_app->bindValue('to_adddte', $_POST['to_adddte']);
-                $res_app = $cmd_app->execute();
-
-                $cmd_ind->bindValue('fr_adddte', $_POST['fr_adddte']);
-                $cmd_ind->bindValue('to_adddte', $_POST['to_adddte']);
-                $res_ind = $cmd_ind->execute();
-
-
-                while ($row = $res_dsp->fetchArray(SQLITE3_ASSOC)) {
-                    $disponibilidade = $row;
-                }
-
-                while ($row = $res_app->fetchArray(SQLITE3_ASSOC)) {
-                    $labels[] = $row['oprnme'];
-                    $data[] = $row['diff_jd'];
-                }
-
-                $indisponibilidade;
-                while ($row = $res_ind->fetchArray(SQLITE3_ASSOC)) {
-                    $indisponibilidade = $row;
-                }
-
-                $disponibilidade_total = (($disponibilidade['dispon_index']) * (1 - $perc_fadiga) - $indisponibilidade['hr_inds'] * (1 - $perc_fadiga));
-
-
-                $dados_usr[] = array(
-                    "usuario" => $row['usuarios'],
-                    "nome" => $row['nome'],
-                    "disponibilidade" => $disponibilidade_total,
-                );
-            }
+        try {
+            $cmdapp = $db->prepare($selapp);
+            $cmdapp->bindValue('fr_adddte', date("Y") . '-' . date("m"));
+            $cmdapp->bindValue('oprnme', $_POST['oprnme']);
+            $resapp = $cmdapp->execute();
+        } catch (Exception $e) {
+            $sqlerr .= '<hr>Caught exception: ' . $e->getMessage();
         }
-    } else {
-        $msg = 'É necessário inserir data inicial e data final';
-        $tamanho = 'style="height: 35em;"';
+
+        while ($rowapp = $resapp->fetchArray(SQLITE3_ASSOC)) {
+            $lblgrp[] = $rowapp;
+           
+        }
+        /*
+        Fim do apontamento entre duas datas - Com indice
+        */
+
+    }
+    else if(isset($_POST['fr_dte']) && $_POST['fr_dte'] != 'mes atual'){
+        $fr_dte = new DateTime($_POST['fr_dte']);
+        $to_dte = new DateTime($_POST['to_dte']);
+        $msg = 'Intervalo de pesquisa: '.$fr_dte->format('d/m/Y').' até '.$to_dte->format('d/m/Y');
+        $msg .= ' para a operação '.$_POST['oprnme'];
+
+        $selapp = "
+            SELECT bd.user as user,
+                    nome as nome,
+                round(ifnull(sum((julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.to_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) - julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0))))) *24 * uf.funidx), 0), 2) as aponta
+            FROM (SELECT (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) days,
+                            (dt.shftim * uf.funidx) *(1 - ".$fadiga.") as shftim,
+                            us.usr_id as user,
+                            us.usrnme as nome
+                    FROM yr_idx dt
+                    join usrsys us
+                    left
+                    join funusr fu
+                        on (us.usr_id = fu.usr_id)
+                    left
+                    join usrfun uf
+                        on (fu.fun_id = uf.fun_id)
+                    WHERE dt.wk_day not in ('sábado', 'domingo')
+                        and us.usr_id in (select usr_id
+                                            from usrlog
+                                        where logdte between :fr_adddte and :to_adddte)
+                        and (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) in (select logdte
+                                                                                    from usrlog
+                                                                                    where logdte between :fr_adddte and :to_adddte)) bd
+            left
+            join usrlog ul
+                on (bd.days = (strftime('%Y-%m-%d', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) and bd.user = ul.usr_id)
+            left
+            join usrind ui
+                on (bd.days = ui.inddte and bd.user = ui.usr_id)
+            left
+            join usropr op
+                on (ul.opr_id = op.opr_id)
+            left
+            join usrprd pd
+                on (ul.prd_id = pd.prd_id)
+            left
+            join funusr fu
+                on (bd.user = fu.usr_id)
+            left
+            join usrfun uf
+                on (fu.fun_id = uf.fun_id)
+            WHERE bd.days between :fr_adddte and :to_adddte
+                and op.oprnme = :oprnme
+            GROUP BY bd.user
+            ORDER BY bd.user asc
+        ";
+
+        try {
+            $cmdapp = $db->prepare($selapp);
+            $cmdapp->bindValue('fr_adddte', $_POST['fr_dte']);
+            $cmdapp->bindValue('to_adddte', $_POST['to_dte']);
+            $cmdapp->bindValue('oprnme', $_POST['oprnme']);
+            $resapp = $cmdapp->execute();
+        } catch (Exception $e) {
+            $sqlerr .= '<hr>Caught exception: ' . $e->getMessage();
+        }
+
+        while ($rowapp = $resapp->fetchArray(SQLITE3_ASSOC)) {
+            $lblgrp[] = $rowapp;
+        }
+
     }
 }
-//Mexi até aqui
-else if (isset($_POST['todos'])) { } else { }
-$soma = 0;
-foreach ($dados_usr as $rows) {
-    $labels[] = $rows['usuario'] . ' - ' . $rows['nome'];
-    $data[] = $rows['disponibilidade'];
+else if(isset($_POST['oprnme']) && !empty($_POST['oprnme']) && $_POST['oprnme'] == 'Disponível'){
+    if(isset($_POST['fr_dte']) && $_POST['fr_dte'] == 'mes atual'){
+        $msg = 'Dispnibilidade dos operadores no mês atual';
+        
+
+        $selapp = "
+            select
+                user as user,
+                nome as nome,
+                sum(dispon) as aponta 
+            from (
+                    SELECT bd.days,
+                            bd.user,
+                            bd.nome,
+                            bd.shftim,
+                            uf.funidx,
+                            ifnull(sum((julianday(ul.to_logtim) - julianday(ul.fr_logtim)) *24 * uf.funidx), 0) as aponta,
+                            ifnull(sum((julianday(ui.to_logtim) - julianday(ui.fr_logtim)) *24 * uf.funidx), 0) as indisp,
+                            round((bd.shftim - 
+                            ifnull(
+                                    sum(
+                                    (julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.to_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) 
+                                    - julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0))))) 
+                                    *24 * uf.funidx), 0)
+                                - ifnull(sum((julianday(ui.to_logtim) - julianday(ui.fr_logtim)) *24 * uf.funidx), 0)), 2) as dispon
+                        FROM (SELECT (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) days,
+                                        (dt.shftim * uf.funidx)*(1-".$fadiga.") as shftim,
+                                        us.usr_id as user,
+                                        us.usrnme as nome
+                                FROM yr_idx dt
+                                join usrsys us
+                                left join 
+                                funusr fu on (us.usr_id = fu.usr_id)
+                                left join 
+                                usrfun uf on (fu.fun_id = uf.fun_id)
+                                WHERE dt.wk_day not in ('sábado', 'domingo') 
+                                and  us.usr_id in (select usr_id from usrlog where substr(logdte,0,8) = :fr_adddte)
+                                and  (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) in 
+                                        (select logdte from usrlog where substr(logdte,0,8) = :fr_adddte)
+                                ) bd
+                        left join usrlog ul
+                        on(bd.days = (strftime('%Y-%m-%d', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) 
+                        and bd.user = ul.usr_id)
+                        left
+                        join usrind ui
+                            on (bd.days = ui.inddte and bd.user = ui.usr_id)
+                        left
+                        join usropr op
+                            on (ul.opr_id = op.opr_id)
+                        left
+                        join usrprd pd
+                            on (ul.prd_id = pd.prd_id)
+                        left
+                        join funusr fu
+                            on (bd.user = fu.usr_id)
+                        left
+                        join usrfun uf
+                            on (fu.fun_id = uf.fun_id)
+                        WHERE substr( bd.days ,0,8) = :fr_adddte
+                        GROUP BY bd.days,
+                                bd.user,
+                                bd.shftim,
+                                uf.funidx
+                )
+            GROUP BY
+                user
+        ";
+
+        try {
+            $cmdapp = $db->prepare($selapp);
+            $cmdapp->bindValue('fr_adddte', date("Y") . '-' . date("m"));
+            $resapp = $cmdapp->execute();
+        } catch (Exception $e) {
+            $sqlerr .= '<hr>Caught exception: ' . $e->getMessage();
+        }
+
+        while ($rowapp = $resapp->fetchArray(SQLITE3_ASSOC)) {
+            $lblgrp[] = $rowapp;
+        
+        }
+
+        $_POST['oprnme'] = 'Disponível';
+    }
+    else if(isset($_POST['fr_dte']) && $_POST['fr_dte'] != 'mes atual'){
+        $fr_dte = new DateTime($_POST['fr_dte']);
+        $to_dte = new DateTime($_POST['to_dte']);
+        $msg = 'Dispnibilidade dos operadores';
+        $msg .= ' no intervalo '.$fr_dte->format('d/m/Y').' até '.$to_dte->format('d/m/Y');
+
+        $selapp = "
+            select
+                user as user,
+                nome as nome,
+                sum(dispon) as aponta 
+            from (
+                    SELECT bd.days,
+                            bd.user,
+                            bd.nome,
+                            bd.shftim,
+                            uf.funidx,
+                            ifnull(sum((julianday(ul.to_logtim) - julianday(ul.fr_logtim)) *24 * uf.funidx), 0) as aponta,
+                            ifnull(sum((julianday(ui.to_logtim) - julianday(ui.fr_logtim)) *24 * uf.funidx), 0) as indisp,
+                            round((bd.shftim - 
+                            ifnull(
+                                    sum(
+                                    (julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.to_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) 
+                                    - julianday(strftime('%Y-%m-%d %H:%M', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0))))) 
+                                    *24 * uf.funidx), 0)
+                                - ifnull(sum((julianday(ui.to_logtim) - julianday(ui.fr_logtim)) *24 * uf.funidx), 0)), 2) as dispon
+                        FROM (SELECT (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) days,
+                                        (dt.shftim * uf.funidx)*(1-".$fadiga.") as shftim,
+                                        us.usr_id as user,
+                                        us.usrnme as nome
+                                FROM yr_idx dt
+                                join usrsys us
+                                left join 
+                                funusr fu on (us.usr_id = fu.usr_id)
+                                left join 
+                                usrfun uf on (fu.fun_id = uf.fun_id)
+                                WHERE dt.wk_day not in ('sábado', 'domingo') 
+                                and  us.usr_id in (select usr_id from usrlog where logdte between :fr_adddte and :to_adddte)
+                                and  (dt.yr_dte || '-' || dt.mn_dte || '-' || dt.dy_dte) in 
+                                        (select logdte from usrlog where logdte between :fr_adddte and :to_adddte)
+                                ) bd
+                        left join usrlog ul
+                        on(bd.days = (strftime('%Y-%m-%d', (julianday(strftime('%Y-%m-%d %H:%M', ul.logdte || ' ' || ul.fr_logtim)) - julianday(((24.0 - 23.0) / 24.0) *3.0)))) 
+                        and bd.user = ul.usr_id)
+                        left
+                        join usrind ui
+                            on (bd.days = ui.inddte and bd.user = ui.usr_id)
+                        left
+                        join usropr op
+                            on (ul.opr_id = op.opr_id)
+                        left
+                        join usrprd pd
+                            on (ul.prd_id = pd.prd_id)
+                        left
+                        join funusr fu
+                            on (bd.user = fu.usr_id)
+                        left
+                        join usrfun uf
+                            on (fu.fun_id = uf.fun_id)
+                        WHERE bd.days between :fr_adddte
+                            and :to_adddte
+                        GROUP BY bd.days,
+                                bd.user,
+                                bd.shftim,
+                                uf.funidx
+                )
+            GROUP BY
+                user
+        ";
+
+        try {
+            $cmdapp = $db->prepare($selapp);
+            $cmdapp->bindValue('fr_adddte', $_POST['fr_dte']);
+            $cmdapp->bindValue('to_adddte', $_POST['to_dte']);
+            $resapp = $cmdapp->execute();
+        } catch (Exception $e) {
+            $sqlerr .= '<hr>Caught exception: ' . $e->getMessage();
+        }
+
+        while ($rowapp = $resapp->fetchArray(SQLITE3_ASSOC)) {
+            $lblgrp[] = $rowapp;
+           
+        }
+
+        $_POST['oprnme'] = 'Disponível';
+    }
+}
+else{
+    $msg = 'Erro inesperado, contate o administrador :(';
 }
 
-//$data_perc_script = implode("', '",$data_perc);
-$labels_script = implode("', '", $labels);
-$data_script = implode(", ", $data);
+
+$soma_hora = 0;
+foreach ($lblgrp as $rowsoma) {
+    $soma_hora = $soma_hora + $rowsoma['aponta'];
+}
+
+foreach ($lblgrp as $row) {
+    $pergrp[] = round($row['aponta'] / $soma_hora, 4) * 100;
+}
 
 $table = '
     <div class="card" >
@@ -222,41 +385,56 @@ $table = '
                 </thead>
                 <tbody>
     ';
-$soma_disponibilidade = 0;
-foreach ($dados_usr as $rows) {
-    $soma_disponibilidade = $soma_disponibilidade + $rows['disponibilidade'];
-}
-foreach ($dados_usr as $rows) {
+
+foreach ($lblgrp as $key => $value) {
     $table .= '
-                    <tr>
-                        <td>' . $rows['usuario'] . ' - ' . $rows['nome'] . '</td>
-                        <td>' . round((($rows['disponibilidade'] / $soma_disponibilidade) * 100), 2) . ' %</td>
-                        <td>' . floor($rows['disponibilidade']) . 'h' . floor(($rows['disponibilidade'] - floor($rows['disponibilidade'])) * 60) . 'm</td>
-                    </tr>';
+                <tr>
+                    <td scope="row">
+                    
+                        <div class="col">
+                           ' . $value['user'] . '
+                        </div>
+                    </form>
+                    </td>
+                    <td>' . $pergrp[$key] . ' %</td>
+                    <td>' . floor($value['aponta']) . 'h' . floor(($value['aponta'] - floor($value['aponta'])) * 60) . 'm</td>
+                </tr>
+    ';
+
 }
+
+
+
+$table .= '
+                </tbody>
+            </table>
+        </div>
+    </div>
+    ';
 
 ?>
 
 <div role="main" class="container-fluid">
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="dashboard-disponibilidade.php">
+            <form method="POST" action="dashboard-disponibilidade2.php">
                 <div class="row">
                     <div class="col">
                         <input type="text" class="form-control-plaintext" value="Data Início:">
                     </div>
                     <div class="col">
-                        <input type="date" class="form-control" placeholder="Data" id="fr_adddte" name="fr_adddte">
+                        <input type="date" class="form-control" placeholder="Data" id="fr_dte" name="fr_dte">
                     </div>
                     <div class="col">
                         <input type="text" class="form-control-plaintext" value="Data Final:">
                     </div>
                     <div class="col">
-                        <input type="date" class="form-control" placeholder="Data" id="to_adddte" name="to_adddte">
+                        <input type="date" class="form-control" placeholder="Data" id="to_dte" name="to_dte">
                     </div>
                     <div class="col">
                         <input type="submit" class="btn btn-primary col-12" name="filtro" value="Filtrar">
                     </div>
+                    <input type="hidden" name="oprnme" id="oprnme" value="<?php echo $_POST['oprnme'];?>">
                 </div>
 
             </form>
@@ -276,7 +454,9 @@ foreach ($dados_usr as $rows) {
         </div>
     </div>
     <br>
-    <?php print '' . $table . ''; ?>
+    <?php
+        echo $table;
+    ?>
 </div>
 
 <div>
@@ -285,98 +465,30 @@ foreach ($dados_usr as $rows) {
     ?>
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
+        var barChartData = {
+            labels: ['<?php echo $_POST['oprnme'];?>'],
+            datasets: [
+            <?php
+                foreach ($lblgrp as $key => $row){
+                    echo "
+                    {
+                        label: '".$row['user']."',
+                        backgroundColor: '".$color[$key]."',
+                        borderWidth: 1,
+                        data: [".$row['aponta']."],
+                    }, 
+                    ";
+            }
+            ?>
+			]
+
+		};
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'bar',
+            labels: '<?php echo $_POST['oprnme'];?>',
             // The data for our dataset
-            data: {
-                labels: ['<?php echo $labels_script; ?>'],
-                datasets: [{
-                    label: ['Disponibilidade'],
-                    backgroundColor: [
-                        'rgb( 50, 50, 50)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)',
-                        'rgb( 50, 50, 50)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)'
-                    ],
-                    borderColor: [
-                        'rgb( 50, 50, 50)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)',
-                        'rgb( 50, 50, 50)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)',
-                        'rgb(0, 86, 145)',
-                        'rgb(0, 142, 207)',
-                        'rgb(0, 168, 176)',
-                        'rgb(120, 190, 32)',
-                        'rgb(0, 98, 73)',
-                        'rgb(185, 2, 118)',
-                        'rgb(80, 35, 127)',
-                        'rgb(82, 95, 107)',
-                        'rgb(191, 192, 194)'
-                    ],
-                    data: [<?php echo $data_script; ?>]
-                }]
-            },
-
+            data: barChartData,
             // Configuration options go here
             options: {
                 responsive: true,
