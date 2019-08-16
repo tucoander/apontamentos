@@ -47,8 +47,8 @@
                 $rescty = $rescty->fetchArray(SQLITE3_ASSOC);
                 
                 $i_tblulg = "
-                    INSERT INTO usrlog ( usr_id , prd_id , opr_id, cty_id , to_usr_id , logdte , fr_logtim, to_logtim, usrobs ) 
-                        VALUES ( :usr_id , :prd_id , :opr_id, :cty_id , :to_usr_id , :logdte , :fr_logtim, :to_logtim, :usrobs);
+                    INSERT INTO usrlog ( usr_id , prd_id , opr_id, cty_id , to_usr_id , logdte , fr_logtim, to_logtim, usrobs, insdte, insusr  ) 
+                        VALUES ( :usr_id , :prd_id , :opr_id, :cty_id , :to_usr_id , :logdte , :fr_logtim, :to_logtim, :usrobs, :insdte, :insusr);
                 ";
 
                 $_usr_id = $_POST['usr_id'];
@@ -60,6 +60,12 @@
                 $_fr_logtim = $_POST['fr_tim'];
                 $_to_logtim = $_POST['to_tim'];
                 $_usrobs = $_POST['usrobs'];
+
+                date_default_timezone_set('America/Sao_Paulo');
+                $agora = new DateTime('now');
+                $_insdte = $agora->format('Y-m-d H:i');
+                $_insusr = $_POST['logged_usr_id'];
+
                 
                 $cmd_db = $db->prepare($i_tblulg);
                 $cmd_db->bindValue('usr_id', $_usr_id);
@@ -72,6 +78,11 @@
                 $cmd_db->bindValue('to_logtim', $_to_logtim);
                 $cmd_db->bindValue('usrobs', $_usrobs);
 
+                
+
+                $cmd_db->bindValue('insdte', $_insdte);
+                $cmd_db->bindValue('insusr', $_insusr);
+
                 $resultado = $cmd_db->execute();
 
                 if($resultado->numColumns() != 0){
@@ -83,19 +94,40 @@
                     ';
                 }
                 else{
-                    print '
-                 
-                    <script language= "JavaScript">
-                        var delay=550;
-                        setTimeout(function(){
-                            window.location.replace("./apontamento-form.php");
-                        },delay);
-                    </script>
-                    <br>
-                    <div class="alert alert-success" role="alert">
-                        Apontamento lançado.
-                    </div>
-                    ';
+
+                    if($_POST['page'] == 'apontamento-form-gestor'){
+                        print '
+                        
+                        <script language= "JavaScript">
+                            var delay=1000;
+                            setTimeout(function(){
+                                window.location.replace("./apontamento-form-gestor.php");
+                            },delay);
+                        </script>
+                        <br>
+                        
+                        <div class="alert alert-success" role="alert">
+                            Apontamento lançado.
+                        </div>
+                        ';
+                    }
+                    else{
+                        print '
+                        
+                        <script language= "JavaScript">
+                            var delay=1000;
+                            setTimeout(function(){
+                                window.location.replace("./apontamento-form.php");
+                            },delay);
+                        </script>
+                        <br>
+                      
+                        <div class="alert alert-success" role="alert">
+                            Apontamento lançado.
+                        </div>
+                        ';
+                    }
+                    
                 }
             }
             else{

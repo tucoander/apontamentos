@@ -19,8 +19,8 @@ jQuery(document).ready(function(){
         var usrask = jQuery("#usrask").val();
         var usrobs = jQuery("#usrobs").val();
         var usr_id = jQuery("#usr_id").val();
-        var logged_usr_id = jQuery("#usr_id").val();
-        var page = 'apontamento-form';
+        var logged_usr_id = jQuery("#logged_usr_id").val();
+        var page = jQuery("#page").val();
         
         // tipo dos dados, url do documento, tipo de dados, campos enviados    
         // para GET mude o type para GET  
