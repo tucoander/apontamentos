@@ -1,0 +1,9 @@
+-- Alter table
+ALTER TABLE usrlog
+  ADD insdte VARCHAR;
+  ALTER TABLE usrlog
+  ADD insusr VARCHAR;
+  ALTER TABLE usrlog
+  ADD lstdte VARCHAR;
+  ALTER TABLE usrlog
+  ADD lstusr VARCHAR;

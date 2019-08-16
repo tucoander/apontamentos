@@ -532,7 +532,7 @@ $table = '
             $table .= '
                         <tr>
                             <td scope="row">
-                            <form method="POST" action="dashboard-detalhamento.php">
+                            <form method="POST" action="#">
                                 <div class="col">
                                     <input type="submit" class="btn btn-light" name="filtro" value="' . $lblgrp[$key] . '">
                                     <input type="hidden" id="oprnme" name="oprnme" value="' . $lblgrp[$key] . '">
@@ -551,7 +551,7 @@ $table = '
             $table .= '
                         <tr>
                             <td scope="row">
-                            <form method="POST" action="dashboard-detalhamento.php">
+                            <form method="POST" action="#">
                                 <div class="col">
                                     <input type="submit" class="btn btn-light" name="filtro" value="' . $lblgrp[$key] . '">
                                     <input type="hidden" id="oprnme" name="oprnme" value="' . $lblgrp[$key] . '">

@@ -13,7 +13,8 @@ $projeto = preg_split('/(\/)/', $_SERVER['PHP_SELF']) ;
         "Indisponibilidade" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/calendario-indisponivel.php",
         "Tabela" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-view.php",
         "Operações" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-dashboard.php",
-        "Disponibilidade" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/dashboard/dashboard-operacoes.php",
+        "Disponibilidade Ponderada" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/dashboard/dashboard-ponderada.php",
+        "Disponibilidade Padrão" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/dashboard/dashboard-normal.php",
         "Produtos" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-produtos.php",
         "Alterar_senha" => $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/usuario/usuario-senha.php",
         "Database"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/sqlite/apontamentos.db",
@@ -121,7 +122,8 @@ if ($_SESSION["usrlog"]) {
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <a class="dropdown-item" href="http://'.$site['Operações'].'">Operações</a>
-                          <a class="dropdown-item" href="http://'.$site['Disponibilidade'].'">Disponibilidade</a>
+                          <a class="dropdown-item" href="http://'.$site['Disponibilidade Ponderada'].'">Disponibilidade Ponderada</a>
+                          <a class="dropdown-item" href="http://'.$site['Disponibilidade Padrão'].'">Disponibilidade Padrão</a>
                           <a class="dropdown-item" href="http://'.$site['Produtos'].'">Produtos por Usuário</a>
                           <a class="dropdown-item" href="http://'.$site['ProdutoGeral'].'">Produtos</a>
 						</div>
