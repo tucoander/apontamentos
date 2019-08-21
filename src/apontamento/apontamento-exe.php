@@ -495,7 +495,7 @@
                         <br>
                     
                         <div class="alert alert-success" role="alert">
-                            Apontamento lançado. Porém foi depois do fechamento dessa semana, fique atento. Fechamento: '.$fechamento.' e a semana do lançamento: '.$semana.'
+                            Apontamento lançado. Porém foi depois do fechamento dessa semana, fique atento.
                         </div>
                         ';
                     }

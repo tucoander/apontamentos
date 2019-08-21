@@ -252,6 +252,11 @@ if($semana >= $fechamento && $_POST['page'] == 'usuario'){
         }
     }
 
+    date_default_timezone_set('America/Sao_Paulo');
+    $agora = new DateTime('now');
+    $lstdte = $agora->format('Y-m-d H:i');
+    $lstusr = $_SESSION['usr_id'];
+
     $u_tbllog = "
     UPDATE usrlog 
         SET lstdte = :lstdte,
@@ -264,20 +269,19 @@ if($semana >= $fechamento && $_POST['page'] == 'usuario'){
     $cmd_db->bindValue('lstusr', $lstusr);
     $resultado = $cmd_db->execute();
 
-    print ' <!--
+    print ' 
             <script language= "JavaScript">
-                var delay=250;
+                var delay=4000;
 				setTimeout(function(){
-					window.location.replace("./apontamento-view-gestor.php");
+					window.location.replace("./apontamento-view.php");
 				},delay);
 			</script>
             <br>
             <div class="alert alert-success" role="alert">
                 Apontamento Alterado.
             </div>
-            -->';
-    var_dump($fechamento);
-    var_dump($semana);
+            ';
+
 }
 /**
  * quando o apontameto for feito pelo gestor
@@ -516,9 +520,9 @@ else if( ( $semana < $fechamento ) and ($_POST['page'] == 'gestor')){
     $resultado = $cmd_db->execute();
 
 
-    print ' <!--
+    print '
             <script language= "JavaScript">
-                var delay=250;
+                var delay=4000;
 				setTimeout(function(){
 					window.location.replace("./apontamento-view-gestor.php");
 				},delay);
@@ -527,9 +531,8 @@ else if( ( $semana < $fechamento ) and ($_POST['page'] == 'gestor')){
             <div class="alert alert-success" role="alert">
                 Apontamento Alterado.
             </div>
-        -->';
-        var_dump($fechamento);
-        var_dump($semana);
+        ';
+
 }
 /**
  * quando o apontameto for feito pelo usuario
@@ -750,6 +753,10 @@ else if( ( $semana < $fechamento ) and ($_POST['page'] == 'usuario')){
             $res_opr = 'Operação não alterada.';
         }
     }
+    date_default_timezone_set('America/Sao_Paulo');
+    $agora = new DateTime('now');
+    $lstdte = $agora->format('Y-m-d H:i');
+    $lstusr = $_SESSION['usr_id'];
 
     $u_tbllog = "
     UPDATE usrlog 
@@ -763,21 +770,18 @@ else if( ( $semana < $fechamento ) and ($_POST['page'] == 'usuario')){
     $cmd_db->bindValue('lstusr', $lstusr);
     $resultado = $cmd_db->execute();
 
-    print ' <!--
+    print ' 
             <script language= "JavaScript">
-                var delay=250;
+                var delay=4000;
 				setTimeout(function(){
-					window.location.replace("./apontamento-view-gestor.php");
+					window.location.replace("./apontamento-view.php");
 				},delay);
 			</script>
             <br>
             <div class="alert alert-success" role="alert">
-                Apontamento Alterado.
-            </div> -->
-            ';
-
-            var_dump($fechamento);
-var_dump($semana);
+                Você é bom mesmo conseguiu ler e encontrar o ero desculpa ai mano, foi maus!!!
+            </div>
+            <!-- Apontamento lançado. Porém foi depois do fechamento dessa semana, fique atento. -->';
 }
  /**
  * quando o apontameto for feito pelo gestor
