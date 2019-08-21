@@ -20,7 +20,8 @@ $projeto = preg_split('/(\/)/', $_SERVER['PHP_SELF']) ;
         "Database"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/sqlite/apontamentos.db",
         "Gráfico"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/dashboard/dashboard-user.php",
         "ProdutoGeral"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/dashboard/dashboard-produtos.php",
-        "Gestor Inserir"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-form-gestor.php"
+        "Gestor Inserir"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-form-gestor.php",
+        "Gestor Editar"=> $_SERVER['HTTP_HOST']."/".$projeto[1]."/src/apontamento/apontamento-view-gestor.php"
     );
 
 
@@ -135,6 +136,7 @@ if ($_SESSION["usrlog"]) {
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <a class="dropdown-item" href="http://'.$site['Gestor Inserir'].'">Inserir Lançamentos</a>
+                          <a class="dropdown-item" href="http://'.$site['Gestor Editar'].'">Editar Lançamentos</a>
 						</div>
 					</li>
                     ';

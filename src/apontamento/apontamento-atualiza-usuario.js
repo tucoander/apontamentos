@@ -20,12 +20,13 @@ jQuery(document).ready(function(){
         var usrask = jQuery("#usrask").val();
         var usrobs = jQuery("#usrobs").val();
         var usr_id = jQuery("#usr_id").val();
+        var page = 'usuario';
         
         // tipo dos dados, url do documento, tipo de dados, campos enviados    
         // para GET mude o type para GET  
         jQuery.ajax({
             type: "POST",
-            url: "apontamento-edit-table-exe.php",
+            url: "apontamento-edit-table-gestor-exe.php",
             dataType: "html",
             data: {
                 log_id: log_id,
@@ -36,7 +37,8 @@ jQuery(document).ready(function(){
                 opr_id: opr_id,
                 usrask: usrask,
                 usrobs: usrobs,
-                usr_id: usr_id
+                usr_id: usr_id,
+                page: page
             },
         // enviado com sucesso
             success: function(response){

@@ -136,8 +136,7 @@
 <?php
     include('../template/template-rodape.php');
 ?>
-<script src="./apontamento-atualiza.js"></script>
+<script src="./apontamento-atualiza-usuario.js"></script>
 <script src="./apontamento-timepicker-from.js"></script> 
 <script src="./apontamento-timepicker-to.js"></script> 
-
 
