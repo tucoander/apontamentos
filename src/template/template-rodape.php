@@ -1,3 +1,4 @@
+   
     <nav class="navbar navbar-bosch bg-bosch fixed-bottom" style="height:15px;">
         <a class="navbar-brand" >
            <br>
@@ -11,5 +12,5 @@
     <script src="../../mdt/js/mdtimepicker.js"></script>
     <script src="../../bootstable/js/bootstable.min.js"></script>
     <script src="../../dashboard/js/Chart.js"></script>
-    </body>
+    
 </html>

@@ -6,7 +6,15 @@
 <main role="main" class="container-fluid">
     <div class="card">
         <div class="card-body">
-            <h1>Lançamento de Horas</h1>
+            <div class="row">
+                <div class="col-4">
+                <h1>Lançamento de Horas</h1>
+                </div>
+                <div class="col-8">
+                <div role="alert" id="res"></div>
+                </div>
+            </div>
+            
             <hr>
             <form id="apontamento">
                 <div class="row">
@@ -114,25 +122,23 @@
                 <button type="submit" class="btn btn-primary" id="salvar" style="width: 33%; float: right;">Salvar</button>
             </form>
             
-        </div>
-
-        <div role="alert" id="res"> 
-            <!-- class="alert alert-primary" -->
-            <?php
-            
-            ?>
-        </div>
+        </div>              
+        
     </div>
     <br>
     <br>
     <br>
+    
 </main>
+
 <?php
     include('../template/template-rodape.php');
 ?>
+
 <script src="./apontamento-form.js"></script>
 <script src="./apontamento-timepicker-from.js"></script> 
-<script src="./apontamento-timepicker-to.js"></script> 
+<script src="./apontamento-timepicker-to.js"></script>
+</body>
 
 
 

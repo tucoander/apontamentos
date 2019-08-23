@@ -42,7 +42,7 @@ jQuery(document).ready(function(){
             },
         // enviado com sucesso
             success: function(response){
-                jQuery("#res").append(response);
+                jQuery("#res").append(response).slideDown( 2000 ).delay( 5000 ).slideUp( 2000 );
                 
             },
             // quando houver erro
