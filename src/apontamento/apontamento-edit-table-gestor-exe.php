@@ -779,7 +779,7 @@ else if( ( $semana < $fechamento ) and ($_POST['page'] == 'usuario')){
 			</script>
             <br>
             <div class="alert alert-success" role="alert">
-                Você é bom mesmo conseguiu ler e encontrar o ero desculpa ai mano, foi maus!!!
+            Apontamento lançado. Porém foi depois do fechamento dessa semana, fique atento.
             </div>
             <!-- Apontamento lançado. Porém foi depois do fechamento dessa semana, fique atento. -->';
 }

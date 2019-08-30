@@ -193,8 +193,8 @@
 ?>
 
 <div role="main" class="container-fluid">
-    <div class="card">
-        <div class="card-body" <?php print $tamanho;?>>
+    <div class="card" >
+        <div class="card-body" <?php print $tamanho;?> >
             <form method="POST" action="dashboard-disponibilidade.php">
                 <div class="row">
                     <div class="col">
@@ -213,9 +213,9 @@
                         <input type="submit" class="btn btn-primary col-12" name="filtro" value="Filtrar">
                     </div>
                 </div>
-
+              
             </form>
-            <div>
+            <div>     
                 <?php
                     if(!empty($msg)){
                         print '<hr>'.$msg;
@@ -223,7 +223,7 @@
                 ?>
             </div>
             <hr>
-            <div>
+            <div >
                 <div class="chart-container">
                     <canvas id="myChart"></canvas>
                 </div>
@@ -235,110 +235,109 @@
 </div>
 
 <div>
-    <?php
+<?php
     include('../template/template-rodape.php');
 ?>
-    <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'bar',
-        // The data for our dataset
-        data: {
-            labels: ['<?php echo $labels_script;?>'],
-            datasets: [{
-                label: ['Disponibilidade'],
-                backgroundColor: [
-                    'rgb( 50, 50, 50)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)',
-                    'rgb( 50, 50, 50)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)'
-                ],
-                borderColor: [
-                    'rgb( 50, 50, 50)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)',
-                    'rgb( 50, 50, 50)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)',
-                    'rgb(0, 86, 145)',
-                    'rgb(0, 142, 207)',
-                    'rgb(0, 168, 176)',
-                    'rgb(120, 190, 32)',
-                    'rgb(0, 98, 73)',
-                    'rgb(185, 2, 118)',
-                    'rgb(80, 35, 127)',
-                    'rgb(82, 95, 107)',
-                    'rgb(191, 192, 194)'
-                ],
-                data: [<?php echo $data_script;?>]
-            }]
-        },
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    // The data for our dataset
+    data: {
+        labels: ['<?php echo $labels_script;?>'],
+        datasets: [{
+            label: ['Disponibilidade'],
+            backgroundColor: [
+                'rgb( 50, 50, 50)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)',
+                'rgb( 50, 50, 50)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)'],
+            borderColor: [
+                'rgb( 50, 50, 50)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)',
+                'rgb( 50, 50, 50)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)',
+                'rgb(0, 86, 145)',
+                'rgb(0, 142, 207)',
+                'rgb(0, 168, 176)',
+                'rgb(120, 190, 32)',
+                'rgb(0, 98, 73)',
+                'rgb(185, 2, 118)',
+                'rgb(80, 35, 127)',
+                'rgb(82, 95, 107)',
+                'rgb(191, 192, 194)'
+            ],
+            data: [<?php echo $data_script;?>]
+        }]
+    },
 
-        // Configuration options go here
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            aspectRatio: 3.3
-
-        }
-    });
-    </script>
+    // Configuration options go here
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        aspectRatio: 3.3
+       
+    }
+});
+</script>
 </div>
