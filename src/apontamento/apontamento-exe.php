@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $db = new SQLite3('../sqlite/apontamentos.db');
     /**
      * select para pegar o fechamento da semana
@@ -28,7 +29,7 @@
     $semana = '';
 
     while($rows = $resfec->fetchArray(SQLITE3_ASSOC)){
-        $fechamento = $rows['semana_indisponivel'];
+        $fechamento = $rows['semana_indisponivel'] - 1;
         $limite = $rows['fechamento'];
         $semana = $rows['semana_lancamento'];
     }
@@ -42,7 +43,7 @@
                 && (isset($_POST['opr_id']))
                 && (isset($_POST['usrask']))
                 && (isset($_POST['usrobs']))
-                && (isset($_POST['usr_id']))
+                && (isset($_POST['logged_usr_id']))
                 )
                 {
                 /**
@@ -104,7 +105,7 @@
                                 VALUES ( :usr_id , :prd_id , :opr_id, :cty_id , :to_usr_id , :logdte , :fr_logtim, :to_logtim, :usrobs, :insdte, :insusr);
                         ";
 
-                        $_usr_id = $_POST['usr_id'];
+                        $_usr_id = $_POST['logged_usr_id'];
                         $_prd_id = $_POST['prd_id'];
                         $_opr_id = $_POST['opr_id'];
                         $_cty_id = $rescty['cty_id'];
@@ -157,11 +158,16 @@
                                 Apontamento lançado!
                             </div>
                             <script>
-                                jQuery("#apontamento input").val("");
-                                jQuery("#apontamento select").val("");
-                                jQuery("#apontamento textarea").val("");
-                                jQuery("#apontamento input[type = submit]").val("");
+                                jQuery("#adddte").val("");
+                                jQuery("#fr_tim").val("");
+                                jQuery("#to_tim").val("");
+                                jQuery("#usrask").val("");
+
+                                jQuery("#prd_id").val("");
+                                jQuery("#opr_id").val("");
+                                jQuery("#usrobs").val("");
                             </script>
+   
                             ';
                         }
                     }
@@ -337,10 +343,14 @@
                             Apontamento lançado!
                         </div>
                         <script>
-                            jQuery("#apontamento input").val("");
-                            jQuery("#apontamento select").val("");
-                            jQuery("#apontamento textarea").val("");
-                            jQuery("#apontamento input[type = submit]").val("");
+                            jQuery("#adddte").val("");
+                            jQuery("#fr_tim").val("");
+                            jQuery("#to_tim").val("");
+                            jQuery("#usrask").val("");
+
+                            jQuery("#prd_id").val("");
+                            jQuery("#opr_id").val("");
+                            jQuery("#usrobs").val("");
                         </script>
                         ';
                     }
@@ -512,10 +522,14 @@
                             Apontamento lançado.
                         </div>
                         <script>
-                            jQuery("#apontamento input").val("");
-                            jQuery("#apontamento select").val("");
-                            jQuery("#apontamento textarea").val("");
-                            jQuery("#apontamento input[type = submit]").val("");
+                            jQuery("#adddte").val("");
+                            jQuery("#fr_tim").val("");
+                            jQuery("#to_tim").val("");
+                            jQuery("#usrask").val("");
+
+                            jQuery("#prd_id").val("");
+                            jQuery("#opr_id").val("");
+                            jQuery("#usrobs").val("");
                         </script>
                         ';
                     }
