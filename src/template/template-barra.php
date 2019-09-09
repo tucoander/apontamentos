@@ -88,6 +88,7 @@ if ($_SESSION["usrlog"]) {
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="../../css/custom.css">
     <link rel="stylesheet" href="../../mdt/css/mdtimepicker.css">
+    <link rel="stylesheet" href="../../clock/css/bootstrap-clockpicker.css">
     <link rel="stylesheet" href="../../dashboard/css/Chart.css">
     
     <title>Apontamento</title>

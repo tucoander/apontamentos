@@ -9,6 +9,7 @@
     <script src="../../popper/popper.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.js"></script>
     <script src="../../mdt/js/mdtimepicker.js"></script>
+    <script src="../../clock/js/bootstrap-clockpicker.min.js"></script>
     <script src="../../bootstable/js/bootstable.min.js"></script>
     <script src="../../dashboard/js/Chart.js"></script>
     </body>
