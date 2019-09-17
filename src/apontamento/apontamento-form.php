@@ -1,6 +1,5 @@
 <?php
     include('../template/template-barra.php');
-    session_start();
 ?>
 <link href="mdtimepicker.css" rel="stylesheet">
 
@@ -23,28 +22,36 @@
                     <div class="col-md-4 mb-3">
                         <label for="adddte">Data</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" id="adddte">
+                            <input type="date" class="form-control data-mascara" id="adddte">
                         </div>
                     </div>
                     <!-- Termina: Data -->
 
                     <!-- Começa: Hora Inicio -->
                     <div class="col-md-4 mb-3">
-                        <label for="fr_tim">Hora Início</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="fr_tim"  >
+                    <label for="fr_tim">Hora Início</label>
+                        <div class="input-group clockpicker">
+                            <input id="fr_tim" type="time" class="form-control hora-mascara" >
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
                         </div>
                     </div>
                     <!-- Termina: Hora Inicio -->
 
                     <!-- Começa: Hora Fim -->
                     <div class="col-md-4 mb-3">
-                        <label for="to_tim">Hora Fim</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="to_tim" >
+                    <label for="to_tim">Hora Fim</label>
+                        <div class="input-group clockpicker">
+                            <input id="to_tim" type="time" class="form-control hora-mascara" >
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
                         </div>
                     </div>
                     <!-- Termina: Hora Fim -->
+
+                    
 
                     <!-- Começa: Produto -->
                     <div class="col-md-6 mb-3">
@@ -137,8 +144,9 @@
 ?>
 
 <script src="./apontamento-form.js"></script>
-<script src="./apontamento-timepicker-from.js"></script> 
-<script src="./apontamento-timepicker-to.js"></script>
+<script src="./apontamento-timepicker-from-btn.js"></script> 
+<script src="./apontamento-timepicker-to-btn.js"></script>
+<script src="./apontamento-mask.js"></script>
 </body>
 
 

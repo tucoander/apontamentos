@@ -27,6 +27,10 @@ $tamanho = 55;
             $msg .= ' até ';
             $msg .= date("d/m/Y", strtotime($_POST['to_adddte']));
             $msg .= $final;
+
+            $fr_dte = $_POST['fr_adddte'];
+            $to_dte = $_POST['to_adddte'];
+            $usr_id = $_POST['usr_id'];
             /*
             Inicio do apontamento entre duas datas com usuário - Sem indice
             */
@@ -195,6 +199,9 @@ $tamanho = 55;
             $msg .= date("d/m/Y", strtotime($_POST['to_adddte']));
             $msg .= $final;
 
+            $fr_dte = $_POST['fr_adddte'];
+            $to_dte = $_POST['to_adddte'];
+            $usr_id = '';
             /*
             Inicio do apontamento entre duas datas - Sem indice
             */
@@ -351,6 +358,10 @@ $tamanho = 55;
         $final = ' para todos os usuários';
         $msg = 'Intervalo Pesquisado é o mês atual';
         $msg .= $final;
+
+        $fr_dte = 'mes atual';
+        $to_dte = '';
+        $usr_id = '';
         /*
             Inicio do apontamento entre duas datas - Sem indice
             */
@@ -532,10 +543,13 @@ $table = '
             $table .= '
                         <tr>
                             <td scope="row">
-                            <form method="POST" action="#">
+                            <form method="POST" action="dashboard-detalhe-p.php">
                                 <div class="col">
                                     <input type="submit" class="btn btn-light" name="filtro" value="' . $lblgrp[$key] . '">
                                     <input type="hidden" id="oprnme" name="oprnme" value="' . $lblgrp[$key] . '">
+                                    <input type="hidden" id="fr_dte" name="fr_dte" value="' . $fr_dte . '">
+                                    <input type="hidden" id="to_dte" name="to_dte" value="' . $to_dte . '">
+                                    <input type="hidden" id="usr_id" name="usr_id" value="' . $usr_id . '">
                                 </div>
                             </form>
                             </td>
@@ -551,10 +565,13 @@ $table = '
             $table .= '
                         <tr>
                             <td scope="row">
-                            <form method="POST" action="#">
+                            <form method="POST" action="dashboard-detalhe-p.php">
                                 <div class="col">
                                     <input type="submit" class="btn btn-light" name="filtro" value="' . $lblgrp[$key] . '">
                                     <input type="hidden" id="oprnme" name="oprnme" value="' . $lblgrp[$key] . '">
+                                    <input type="hidden" id="fr_dte" name="fr_dte" value="' . $fr_dte . '">
+                                    <input type="hidden" id="to_dte" name="to_dte" value="' . $to_dte . '">
+                                    <input type="hidden" id="usr_id" name="usr_id" value="' . $usr_id . '">
                                 </div>
                             </form>
                             </td>
