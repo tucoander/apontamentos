@@ -92,7 +92,7 @@
 			<input type="password" id="usrpsw" name="usrpsw" class="form-control" placeholder="Senha" required value="">
 			<button id="logar" class="btn btn-lg btn-primary btn-block" type="submit">Logar</button>
 			<div class="h3 mb-3 font-weight-normal" id="res">
-			<!-- Resposta -->
+			<!-- Resposta1 -->
 			<?php
 				
 			?>
