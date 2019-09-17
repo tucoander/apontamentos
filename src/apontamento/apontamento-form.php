@@ -31,7 +31,7 @@
                     <div class="col-md-4 mb-3">
                     <label for="fr_tim">Hora Início</label>
                         <div class="input-group clockpicker">
-                            <input id="fr_tim" type="text" class="form-control hora-mascara" >
+                            <input id="fr_tim" type="time" class="form-control hora-mascara" >
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -43,7 +43,7 @@
                     <div class="col-md-4 mb-3">
                     <label for="to_tim">Hora Fim</label>
                         <div class="input-group clockpicker">
-                            <input id="to_tim" type="text" class="form-control hora-mascara" >
+                            <input id="to_tim" type="time" class="form-control hora-mascara" >
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
