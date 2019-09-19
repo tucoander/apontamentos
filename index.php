@@ -87,16 +87,22 @@
 			<img class="mb-4" src="./img/bosch-17.png" alt=""  height="72">
 			<h1 class="h3 mb-3 font-weight-normal">Por favor entre</h1>
 			<label for="usr_id" class="sr-only">Usuário</label>
-			<input type="text" id="usr_id" name="usr_id" class="form-control" placeholder="Usuário" required autofocus value="">
+			<input type="text" id="usr_id" name="usr_id" class="form-control" placeholder="Usuário" required autofocus value="" onkeyup="toUpper(this);">
 			<label for="usrpsw" class="sr-only">Senha</label>
 			<input type="password" id="usrpsw" name="usrpsw" class="form-control" placeholder="Senha" required value="">
 			<button id="logar" class="btn btn-lg btn-primary btn-block" type="submit">Logar</button>
 			<div class="h3 mb-3 font-weight-normal" id="res">
-			<!-- Resposta1 -->
+			<!-- Resposta -->
 			<?php
 				
 			?>
 			</div>
 		</form>
+		<script>
+			function toUpper(element) 
+			{
+				element.value = element.value.toUpperCase();
+			}
+		</script>
 	</body>
 </html>
