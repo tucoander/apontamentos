@@ -114,6 +114,36 @@
         <?php
         $contador = 0;
         $resultado = $cmd_db->execute();
+
+
+        $edit_fec = "
+        select
+            max((yr_dte||'-'||mn_dte||'-'||dy_dte)) as ult_dia_fechado
+        FROM
+            yr_idx
+        WHERE
+            (strftime('%W',(yr_dte||'-'||mn_dte||'-'||dy_dte) )+0) = 
+            (SELECT
+            strftime('%W', (yy.yr_dte||'-'||yy.mn_dte||'-'||yy.dy_dte)) -1
+        from
+            yr_idx yy
+        WHERE
+            strftime('%W', (yy.yr_dte||'-'||yy.mn_dte||'-'||yy.dy_dte)) = strftime('%W', 'now')
+            and wk_day = 'terça-feira'
+        GROUP BY
+            strftime('%W', (yy.yr_dte||'-'||yy.mn_dte||'-'||yy.dy_dte))) 
+        ";
+
+        $cmdfechamento = $db->prepare($edit_fec);
+        $resfechamento = $cmdfechamento->execute();
+
+        $data_fec = '';
+
+        while($rows = $resfechamento->fetchArray(SQLITE3_ASSOC)){
+            $data_fec = $rows['ult_dia_fechado'];
+        }
+
+
             while($row = $resultado->fetchArray(SQLITE3_ASSOC)){
                 print '
                     <tr>
@@ -127,7 +157,9 @@
                         <td>'.$row["fr_logtim"].'</td>
                         <td>'.$row["to_logtim"].'</td>
                         <td>'.$row["usrobs"].'</td>
-                        <td>
+                        <td>';
+                        if($data_fec <= $row["logdte"]){
+                            print'
                             <!-- Botão cada form -->
                             <form id="update'.$contador.'" action="apontamento-atualiza-usuario.php" method="post">
                                 <input type="text" class="form-control" name="log_id" id="log_id" placeholder=""  value="'.$row["log_id"].'" hidden>
@@ -145,8 +177,16 @@
                                 </button>
                             </form>
                         </td>
-                    </tr>';
-               
+                    </tr>';}
+                    else {
+                        print'
+                        <!-- Botão cada form -->
+                        <button class="btn btn-secundary" data-toggle="tooltip" title="Não é possível editar após o fechamento">
+                            Editar
+                        </button>
+                    </td>
+                </tr>';}
+                            
                 $contador++;
             }
        ?>
@@ -165,5 +205,5 @@
 <?php
     include('../template/template-rodape.php');
 ?>
-
+<script> $('[data-toggle="tooltip"]').tooltip(); </script>
 <script src="apontamento-edit-row.js"></script>
