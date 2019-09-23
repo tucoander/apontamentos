@@ -539,7 +539,6 @@ else if( ( $semana < $fechamento ) and ($_POST['page'] == 'gestor')){
  * e a semana atual for inferior ao fechamento
  * semana fechada
  * não permite lançamento
- * lançamento permitido temporariamente
  */
 else if(( $semana < $fechamento ) and ($_POST['page'] == 'usuario')){
     print '
