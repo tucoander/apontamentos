@@ -8,7 +8,7 @@ session_start();
 $selfec = "
 	select 
 		(yy.yr_dte||'-'||mn_dte||'-'||dy_dte||' 12:00') as fechamento,
-		strftime('%W',(yy.yr_dte||'-'||mn_dte||'-'||dy_dte||' 12:00')) as semana_indisponivel,
+		strftime('%W',(yy.yr_dte||'-'||mn_dte||'-'||dy_dte||' 12:00')) - 1 as semana_indisponivel,
 		strftime('%W',:apontamento) as semana_lancamento,
 		yy.*
 	from
