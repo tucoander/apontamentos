@@ -124,7 +124,7 @@
         WHERE
             (strftime('%W',(yr_dte||'-'||mn_dte||'-'||dy_dte) )+0) = 
             (SELECT
-            strftime('%W', (yy.yr_dte||'-'||yy.mn_dte||'-'||yy.dy_dte)) -1
+            strftime('%W', (yy.yr_dte||'-'||yy.mn_dte||'-'||yy.dy_dte)) -2
         from
             yr_idx yy
         WHERE
