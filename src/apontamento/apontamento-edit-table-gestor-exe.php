@@ -550,8 +550,7 @@ else if(( $semana < $fechamento ) and ($_POST['page'] == 'usuario')){
  /**
  * quando o apontameto for feito pelo gestor
  * e a semana atual for igual ou superior ao fechamento
- * semana aberta
- * não permite lançamento
+ * semana aberta não permite lançamento
  */
 else if( ( $semana >= $fechamento ) and ($_POST['page'] == 'gestor')){
 	print '
