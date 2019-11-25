@@ -598,6 +598,38 @@ $data_script = implode("', '", $numgrp);
 
 
 ?>
+
+<?php
+    $tabela_ponderacao = '
+    <div class="card" >
+            <div class="card-body">
+                <table class="table" id="apontamento">
+                    <thead>
+                        <tr>
+                            <th scope="col">Função</th>
+                            <th scope="col">Fator</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                   
+                        <tr>	<td>	Estagiário	</td><td>	0,15	</td>	</tr>
+                        <tr>	<td>	Assistente Jr	</td><td>	0,30	</td>	</tr>
+                        <tr>	<td>	Assistente Pl	</td><td>	0,45	</td>	</tr>
+                        <tr>	<td>	Assisitente Sr	</td><td>	0,60	</td>	</tr>
+                        <tr>	<td>	Analista Jr	</td><td>	0,75	</td>	</tr>
+                        <tr>	<td>	Analista Pl	</td><td>	1,00	</td>	</tr>
+                        <tr>	<td>	Analista Sr	</td><td>	1,15	</td>	</tr>
+                        <tr>	<td>	Supervisor	</td><td>	1,30	</td>	</tr>
+                        <tr>	<td>	Chefe	</td><td>	1,45	</td>	</tr>
+                        <tr>	<td>	Gerente	</td><td>	1,60	</td>	</tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    ';
+?>
+
 <div role="main" class="container-fluid">
     <div class="card">
         <div class="card-body" <?php print $tamanho; ?>>
@@ -663,16 +695,31 @@ $data_script = implode("', '", $numgrp);
                 ?>
             </div>
             <hr>
-            <div>
-                <div class="chart-container">
-                    <canvas id="myChart"></canvas>
+            <div class="row">
+                <div class="col-sm-9">
+                    <div sytle="">
+                        <div class="chart-container">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <?php echo $tabela_ponderacao; ?>
                 </div>
             </div>
+            
         </div>
     </div>
     <br>
-    <?php print '' . $table . ''; 
-    ?>
+
+   
+
+    <div class=""> <?php print '' . $table . '';  ?></div>
+
+</div>
+
+   
+
 </div>
 
 <div>
@@ -719,7 +766,18 @@ $data_script = implode("', '", $numgrp);
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                aspectRatio: 2.5
+                aspectRatio: 2.5,
+                legend: {
+                    position: 'left'
+                },
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                }
             }
         });
     </script>
