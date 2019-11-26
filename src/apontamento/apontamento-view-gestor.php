@@ -2,6 +2,8 @@
     include('../template/template-barra.php');
     $db = new SQLite3('../sqlite/apontamentos.db');
     $s_tbllog = "";
+    if($_SESSION['usr_id'] == 'CLU1CA' or $_SESSION['usr_id'] == 'HDI1SP' or $_SESSION['usr_id'] == 'LIT6CA'){
+
 ?>
                     <div class="col-md-4 mb-1">
                         
@@ -234,3 +236,20 @@
 ?>
 <script> $('[data-toggle="tooltip"]').tooltip(); </script>
 
+<?php
+
+    }
+    else{
+        echo '
+        <main role="main" class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                <div>Você não possui acesso</div>
+            </div>
+        </div>';
+        include('../template/template-rodape.php');
+
+    }
+
+
+?>
