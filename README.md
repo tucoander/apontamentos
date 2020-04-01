@@ -53,11 +53,11 @@
    <p id="ca3caa8e-4840-4d5a-9d6f-a6217dfcae36" class="">Dashboard para usuário</p>
    <figure id="4a184727-ee45-4874-af55-dd7158c7a45a" class="image"><a href="#"><img style="width:1898px" src="/img/readme/apontamentos-gráficos-usuário.png"></a></figure>
    <p id="288e51d4-092e-4044-bc8a-c7eed6fda68f" class="">Tela para consulta dos apontamentos</p>
-   <figure id="a02d8c76-7beb-4457-8a22-0fec1fd2e309" class="image"><a href="#"><img style="width:1920px" src="/img/readme/apontamentos-edição.png.png"></a></figure>
+   <figure id="a02d8c76-7beb-4457-8a22-0fec1fd2e309" class="image"><a href="#"><img style="width:1920px" src="/img/readme/apontamentos-edição.png"></a></figure>
    <p id="7ecee006-f86e-400f-88cc-0cd721cbf5af" class="">Dashboard para gestores</p>
    <figure id="f1c011d7-af35-47f5-bd0b-406daf80accc" class="image"><a href="#"><img style="width:1900px" src="/img/readme/apontamentos-dashboard-gestão.png"></a></figure>
    <p id="6dd8d4b8-ad44-4fe0-8af9-c0885c5e1b76" class="">Dashboard para gestores por localidade</p>
-   <figure id="40ba2ecf-cc5e-49ea-b7b7-88a0c0b2bf33" class="image"><a href="#"><img style="width:1900px" src="/img/readme/apontamentos-dashboard-gestão-unidade.png.png"></a></figure>
+   <figure id="40ba2ecf-cc5e-49ea-b7b7-88a0c0b2bf33" class="image"><a href="#"><img style="width:1900px" src="/img/readme/apontamentos-dashboard-gestão-unidade.png"></a></figure>
    <figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a558d42b-68ff-4d3c-abba-5dbf858803bf">
       <div style="font-size:1.5em"><span class="icon">💡</span></div>
       <div style="width:100%">Os usuários foram ocultados </div>
